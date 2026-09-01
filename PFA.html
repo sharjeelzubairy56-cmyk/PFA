@@ -1,0 +1,1308 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AL2001: Python for AI - Interactive Mastery Suite</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- FontAwesome CDN (CSS Icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+
+        code, pre, .font-mono {
+            font-family: 'Fira Code', monospace;
+        }
+
+        /* Chart container constraint rules */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            max-height: 400px;
+        }
+
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 360px;
+            }
+        }
+
+        /* Custom scrollbars */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+
+            ::-webkit-scrollbar-thumb:hover {
+                background: #94a3b8;
+            }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Chosen Palette: Warm Neutral Slate & Accent Amber/Indigo -->
+    <!-- Application Structure Plan: Designed as a 4-tab interactive learning suite for AL2001 Python for AI.
+         1) Study Explorer: Modular, searchable theory cards with code blocks and key takeaways.
+         2) Interactive Logic & Memory Playground: Live simulators for string slicing, shallow vs deep copying, negative floor division, and match/case structural pattern matching.
+         3) Exam Prep Quiz Engine: Interactive test runner for all 10 practice questions with immediate answer feedback and rationale modals.
+         4) Diagnostic Analytics Dashboard: Chart.js visualizations breaking down performance by topic area.
+         This non-linear architecture prioritizes interactive learning and edge-case testing over passive textbook reading. -->
+    <!-- Visualization & Content Choices:
+         1. String Slicing -> Interactive Index Grid -> HTML dynamic badge highlighting -> Goal: Visualize index bounds & step logic.
+         2. Memory & Copying -> Interactive RAM Memory Simulator -> CSS/JS box layout & reference lines -> Goal: Explain shallow vs deep copy reference sharing.
+         3. Floor Division -> Float vs Int visualizer -> HTML/CSS number line -> Goal: Clear confusion on negative rounding.
+         4. Match/Case -> Interactive Structural Flow Evaluator -> HTML step cards -> Goal: Teach Python 3.10 structural matching.
+         5. Performance Chart -> Chart.js Radar & Bar Chart -> Canvas -> Goal: Topic strength breakdown.
+         NO SVG or Mermaid JS used. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <!-- TOP HEADER -->
+    <header class="bg-slate-900 text-white border-b border-slate-800 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-3">
+                    <div class="bg-indigo-600 text-white p-2 rounded-lg font-bold text-lg flex items-center justify-center w-10 h-10 shadow-md">
+                        <i class="fa-solid fa-code"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-bold text-base sm:text-lg leading-tight">AL2001: Programming for AI</h1>
+                        <p class="text-xs text-slate-400">Interactive Mastery & Exam Preparation Suite</p>
+                    </div>
+                </div>
+
+                <!-- Navigation Tabs -->
+                <nav class="hidden md:flex space-x-1">
+                    <button onclick="switchTab('explorer')" id="nav-explorer" class="nav-btn text-indigo-400 bg-slate-800 px-3 py-2 rounded-md text-sm font-medium flex items-center gap-2 transition">
+                        <i class="fa-solid fa-book-open"></i> Study Explorer
+                    </button>
+                    <button onclick="switchTab('playground')" id="nav-playground" class="nav-btn text-slate-300 hover:text-white hover:bg-slate-800 px-3 py-2 rounded-md text-sm font-medium flex items-center gap-2 transition">
+                        <i class="fa-solid fa-flask"></i> Interactive Lab
+                    </button>
+                    <button onclick="switchTab('quiz')" id="nav-quiz" class="nav-btn text-slate-300 hover:text-white hover:bg-slate-800 px-3 py-2 rounded-md text-sm font-medium flex items-center gap-2 transition">
+                        <i class="fa-solid fa-graduation-cap"></i> Practice Exam
+                    </button>
+                    <button onclick="switchTab('analytics')" id="nav-analytics" class="nav-btn text-slate-300 hover:text-white hover:bg-slate-800 px-3 py-2 rounded-md text-sm font-medium flex items-center gap-2 transition">
+                        <i class="fa-solid fa-chart-pie"></i> Performance Analytics
+                    </button>
+                </nav>
+
+                <!-- Status Badge -->
+                <div class="flex items-center gap-2 bg-slate-800 border border-slate-700 px-3 py-1.5 rounded-full text-xs text-slate-300">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span>10 Exam Topics Active</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation bar -->
+        <div class="md:hidden flex border-t border-slate-800 bg-slate-900 justify-around p-2 text-xs">
+            <button onclick="switchTab('explorer')" id="mobile-nav-explorer" class="text-indigo-400 p-2 text-center flex flex-col items-center">
+                <i class="fa-solid fa-book-open mb-1"></i> Explorer
+            </button>
+            <button onclick="switchTab('playground')" id="mobile-nav-playground" class="text-slate-400 p-2 text-center flex flex-col items-center">
+                <i class="fa-solid fa-flask mb-1"></i> Lab
+            </button>
+            <button onclick="switchTab('quiz')" id="mobile-nav-quiz" class="text-slate-400 p-2 text-center flex flex-col items-center">
+                <i class="fa-solid fa-graduation-cap mb-1"></i> Exam
+            </button>
+            <button onclick="switchTab('analytics')" id="mobile-nav-analytics" class="text-slate-400 p-2 text-center flex flex-col items-center">
+                <i class="fa-solid fa-chart-pie mb-1"></i> Analytics
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+        <!-- ========================================== -->
+        <!-- TAB 1: STUDY EXPLORER                      -->
+        <!-- ========================================== -->
+        <section id="tab-explorer" class="space-y-6">
+            <!-- Introductory Context Banner -->
+            <div class="bg-gradient-to-r from-indigo-900 to-slate-900 rounded-2xl p-6 text-white shadow-lg relative overflow-hidden">
+                <div class="relative z-10 max-w-3xl">
+                    <span class="inline-block bg-indigo-500/30 text-indigo-200 text-xs font-semibold px-2.5 py-1 rounded-md mb-3 border border-indigo-400/30">
+                        Course Material Digest
+                    </span>
+                    <h2 class="text-2xl sm:text-3xl font-bold mb-2">Python Fundamentals Knowledge Base</h2>
+                    <p class="text-slate-300 text-sm leading-relaxed mb-4">
+                        Explore core lecture concepts covering dynamic typing, floor division, string immutability, pattern matching, and mutable memory structures. Use the search filter to quickly find exam definitions, code rules, and syntax traps.
+                    </p>
+                    <div class="flex flex-wrap gap-2 text-xs">
+                        <span class="bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700 text-slate-300"><i class="fa-solid fa-check text-emerald-400 mr-1.5"></i> Variables & Casting</span>
+                        <span class="bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700 text-slate-300"><i class="fa-solid fa-check text-emerald-400 mr-1.5"></i> String Slicing & Methods</span>
+                        <span class="bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700 text-slate-300"><i class="fa-solid fa-check text-emerald-400 mr-1.5"></i> Match / Case Patterns</span>
+                        <span class="bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700 text-slate-300"><i class="fa-solid fa-check text-emerald-400 mr-1.5"></i> Shallow vs Deep Copying</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filter Controls -->
+            <div class="flex flex-col sm:flex-row gap-4 items-center justify-between bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                <div class="relative w-full sm:w-96">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                    <input type="text" id="study-search" oninput="filterStudyCards()" placeholder="Search concepts (e.g. 'slice', 'copy', 'floor')..."
+                           class="w-full pl-9 pr-4 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                </div>
+                <div class="flex items-center gap-2 w-full sm:w-auto overflow-x-auto pb-1 sm:pb-0">
+                    <button onclick="filterCategory('all')" class="cat-filter-btn active bg-indigo-50 text-indigo-700 border border-indigo-200 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap">All Topics</button>
+                    <button onclick="filterCategory('basics')" class="cat-filter-btn bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap">Basics & Ops</button>
+                    <button onclick="filterCategory('strings')" class="cat-filter-btn bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap">Strings & Formatting</button>
+                    <button onclick="filterCategory('control')" class="cat-filter-btn bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap">Control Flow</button>
+                    <button onclick="filterCategory('structures')" class="cat-filter-btn bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap">Lists & Tuples</button>
+                </div>
+            </div>
+
+            <!-- Knowledge Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="study-cards-container">
+
+                <!-- Module 1 -->
+                <div class="study-card bg-white rounded-xl border border-slate-200 shadow-sm p-5 hover:shadow-md transition" data-category="basics" data-keywords="variables typing int float bool casting conversion operators division floor division modulo exponent">
+                    <div class="flex items-start justify-between mb-3">
+                        <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">Basics & Operators</span>
+                        <span class="text-xs text-slate-400 font-mono">Module 01</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-800 mb-2">Variables, Dynamic Typing & Mathematical Operators</h3>
+                    <p class="text-sm text-slate-600 mb-4">
+                        Python dynamically infers variable types without explicit type declarations. However, mathematical operations enforce strict rules regarding floating-point output and rounding behavior.
+                    </p>
+                    <div class="bg-slate-900 rounded-lg p-3 text-xs text-slate-200 font-mono mb-4 overflow-x-auto">
+                        <p class="text-slate-400"># Floor division rounds down toward negative infinity</p>
+                        <p><span class="text-purple-400">print</span>(10 / 5)     <span class="text-emerald-400"># 2.0 (float)</span></p>
+                        <p><span class="text-purple-400">print</span>(10 // 3)    <span class="text-emerald-400"># 3 (rounds down)</span></p>
+                        <p><span class="text-purple-400">print</span>(-10 // 3)   <span class="text-amber-400"># -4 (rounds DOWN from -3.33)</span></p>
+                        <p><span class="text-purple-400">print</span>(10 % 3)     <span class="text-emerald-400"># 1 (remainder)</span></p>
+                    </div>
+                    <div class="border-t border-slate-100 pt-3 flex items-center justify-between text-xs text-slate-500">
+                        <span><i class="fa-solid fa-triangle-exclamation text-amber-500 mr-1"></i> Exam Trap: <code class="bg-slate-100 px-1 rounded text-slate-800">int("Hello")</code> throws ValueError</span>
+                    </div>
+                </div>
+
+                <!-- Module 2 -->
+                <div class="study-card bg-white rounded-xl border border-slate-200 shadow-sm p-5 hover:shadow-md transition" data-category="strings" data-keywords="input output format f-strings percentage float precision input string casting print">
+                    <div class="flex items-start justify-between mb-3">
+                        <span class="bg-emerald-100 text-emerald-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">I/O & Formatting</span>
+                        <span class="text-xs text-slate-400 font-mono">Module 02</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-800 mb-2">Input Processing & f-String Precision Formatting</h3>
+                    <p class="text-sm text-slate-600 mb-4">
+                        <code class="bg-slate-100 px-1 py-0.5 rounded text-indigo-600">input()</code> always returns a string (<code class="bg-slate-100 px-1 py-0.5 rounded text-indigo-600">str</code>). Numbers require immediate type casting. Modern Python uses f-strings with embedded formatting specifications.
+                    </p>
+                    <div class="bg-slate-900 rounded-lg p-3 text-xs text-slate-200 font-mono mb-4 overflow-x-auto">
+                        <p>acc = <span class="text-cyan-400">0.9478</span></p>
+                        <p>samples = <span class="text-cyan-400">1256789</span></p>
+                        <p><span class="text-purple-400">print</span>(<span class="text-emerald-300">f"{acc:.2%}"</span>)    <span class="text-emerald-400"># "94.78%"</span></p>
+                        <p><span class="text-purple-400">print</span>(<span class="text-emerald-300">f"{samples:,}"</span>) <span class="text-emerald-400"># "1,256,789"</span></p>
+                    </div>
+                    <div class="border-t border-slate-100 pt-3 flex items-center justify-between text-xs text-slate-500">
+                        <span><i class="fa-solid fa-lightbulb text-indigo-500 mr-1"></i> Note: Direct mathematical operations on <code class="bg-slate-100 px-1 rounded text-slate-800">input()</code> fail without <code class="bg-slate-100 px-1 rounded text-slate-800">int()</code>/<code class="bg-slate-100 px-1 rounded text-slate-800">float()</code></span>
+                    </div>
+                </div>
+
+                <!-- Module 3 -->
+                <div class="study-card bg-white rounded-xl border border-slate-200 shadow-sm p-5 hover:shadow-md transition" data-category="strings" data-keywords="string slicing indexing immutability strip lower upper split join find reverse">
+                    <div class="flex items-start justify-between mb-3">
+                        <span class="bg-emerald-100 text-emerald-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">Strings & Methods</span>
+                        <span class="text-xs text-slate-400 font-mono">Module 03</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-800 mb-2">String Immutability & Slicing Syntax</h3>
+                    <p class="text-sm text-slate-600 mb-4">
+                        Strings are immutable ordered sequences. Methods like <code class="bg-slate-100 px-1 rounded text-slate-800">.strip()</code> and <code class="bg-slate-100 px-1 rounded text-slate-800">.lower()</code> return <strong>NEW</strong> strings and do NOT modify the variable in place unless reassigned!
+                    </p>
+                    <div class="bg-slate-900 rounded-lg p-3 text-xs text-slate-200 font-mono mb-4 overflow-x-auto">
+                        <p>s = <span class="text-emerald-300">"Artificial"</span></p>
+                        <p>sub = s[<span class="text-cyan-400">1</span>:<span class="text-cyan-400">8</span>:<span class="text-cyan-400">2</span>] <span class="text-emerald-400"># Start=1, Stop=8 (excl), Step=2</span></p>
+                        <p><span class="text-purple-400">print</span>(sub)       <span class="text-emerald-400"># Output: "riii"</span></p>
+                        <p class="text-slate-400 mt-1"># Methods return new strings:</p>
+                        <p>text = <span class="text-emerald-300">"  Python  "</span></p>
+                        <p>text.strip()     <span class="text-amber-400"># 'text' remains "  Python  "!</span></p>
+                    </div>
+                    <div class="border-t border-slate-100 pt-3 flex items-center justify-between text-xs text-slate-500">
+                        <span><i class="fa-solid fa-triangle-exclamation text-amber-500 mr-1"></i> Exam Trap: Failing to assign string method outputs leaves variables unchanged!</span>
+                    </div>
+                </div>
+
+                <!-- Module 4 -->
+                <div class="study-card bg-white rounded-xl border border-slate-200 shadow-sm p-5 hover:shadow-md transition" data-category="control" data-keywords="if elif else match case pattern matching structural guards pass wildcard indentation">
+                    <div class="flex items-start justify-between mb-3">
+                        <span class="bg-purple-100 text-purple-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">Control Flow</span>
+                        <span class="text-xs text-slate-400 font-mono">Module 04</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-800 mb-2">Control Flow & Structural Pattern Matching (`match/case`)</h3>
+                    <p class="text-sm text-slate-600 mb-4">
+                        Python 3.10+ introduced structural pattern matching. Features include value matching, structural unpacking, conditional guards (<code class="bg-slate-100 px-1 rounded text-slate-800">if</code>), OR patterns (<code class="bg-slate-100 px-1 rounded text-slate-800">|</code>), and the wildcard (<code class="bg-slate-100 px-1 rounded text-slate-800">_</code>).
+                    </p>
+                    <div class="bg-slate-900 rounded-lg p-3 text-xs text-slate-200 font-mono mb-4 overflow-x-auto">
+                        <p>point = (<span class="text-cyan-400">0</span>, <span class="text-cyan-400">5</span>)</p>
+                        <p><span class="text-purple-400">match</span> point:</p>
+                        <p>&nbsp;&nbsp;<span class="text-purple-400">case</span> (x, y) <span class="text-purple-400">if</span> x == y: <span class="text-purple-400">print</span>(<span class="text-emerald-300">"Diagonal"</span>)</p>
+                        <p>&nbsp;&nbsp;<span class="text-purple-400">case</span> (<span class="text-cyan-400">0</span>, y): <span class="text-purple-400">print</span>(<span class="text-emerald-300">f"Y-axis: {y}"</span>) <span class="text-emerald-400"># MATCHES!</span></p>
+                        <p>&nbsp;&nbsp;<span class="text-purple-400">case</span> _: <span class="text-purple-400">print</span>(<span class="text-emerald-300">"Other"</span>)</p>
+                    </div>
+                    <div class="border-t border-slate-100 pt-3 flex items-center justify-between text-xs text-slate-500">
+                        <span><i class="fa-solid fa-lightbulb text-indigo-500 mr-1"></i> Empty blocks require <code class="bg-slate-100 px-1 rounded text-slate-800">pass</code> or <code class="bg-slate-100 px-1 rounded text-slate-800">...</code> (not <code class="bg-slate-100 px-1 rounded text-slate-800">continue</code> outside loops)</span>
+                    </div>
+                </div>
+
+                <!-- Module 5 -->
+                <div class="study-card bg-white rounded-xl border border-slate-200 shadow-sm p-5 hover:shadow-md transition" data-category="structures" data-keywords="lists tuples mutable immutable append extend pop remove sort aliasing shallow copy deep copy">
+                    <div class="flex items-start justify-between mb-3">
+                        <span class="bg-amber-100 text-amber-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">Data Structures</span>
+                        <span class="text-xs text-slate-400 font-mono">Module 05</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-800 mb-2">Lists vs. Tuples: Mutability & Methods</h3>
+                    <p class="text-sm text-slate-600 mb-4">
+                        Lists (<code class="bg-slate-100 px-1 rounded text-slate-800">[ ]</code>) are mutable sequences; Tuples (<code class="bg-slate-100 px-1 rounded text-slate-800">( )</code>) are immutable. List methods modify in-place and return <code class="bg-slate-100 px-1 rounded text-slate-800">None</code>.
+                    </p>
+                    <div class="bg-slate-900 rounded-lg p-3 text-xs text-slate-200 font-mono mb-4 overflow-x-auto">
+                        <p>my_list = [<span class="text-cyan-400">1</span>, <span class="text-cyan-400">2</span>]</p>
+                        <p>my_list.extend((<span class="text-cyan-400">3</span>, <span class="text-cyan-400">4</span>)) <span class="text-emerald-400"># [1, 2, 3, 4]</span></p>
+                        <p>my_list.append([<span class="text-cyan-400">5</span>, <span class="text-cyan-400">6</span>]) <span class="text-emerald-400"># [1, 2, 3, 4, [5, 6]]</span></p>
+                        <p><span class="text-purple-400">print</span>(<span class="text-purple-400">len</span>(my_list))   <span class="text-emerald-400"># 5 elements total!</span></p>
+                    </div>
+                    <div class="border-t border-slate-100 pt-3 flex items-center justify-between text-xs text-slate-500">
+                        <span><i class="fa-solid fa-triangle-exclamation text-amber-500 mr-1"></i> <code class="bg-slate-100 px-1 rounded text-slate-800">extend</code> unpacks elements, whereas <code class="bg-slate-100 px-1 rounded text-slate-800">append</code> adds nested item</span>
+                    </div>
+                </div>
+
+                <!-- Module 6 -->
+                <div class="study-card bg-white rounded-xl border border-slate-200 shadow-sm p-5 hover:shadow-md transition" data-category="structures" data-keywords="shallow copy aliasing deepcopy memory reference nested list pointer">
+                    <div class="flex items-start justify-between mb-3">
+                        <span class="bg-amber-100 text-amber-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">Data Structures</span>
+                        <span class="text-xs text-slate-400 font-mono">Module 06</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-800 mb-2">Memory Allocation: Aliasing vs. Shallow Copying</h3>
+                    <p class="text-sm text-slate-600 mb-4">
+                        Assignment creates an <em>alias</em> (same memory location). <code class="bg-slate-100 px-1 rounded text-slate-800">.copy()</code> creates a <em>shallow copy</em> where outer lists are duplicated, but nested objects still share memory references!
+                    </p>
+                    <div class="bg-slate-900 rounded-lg p-3 text-xs text-slate-200 font-mono mb-4 overflow-x-auto">
+                        <p>original = [[<span class="text-cyan-400">1</span>, <span class="text-cyan-400">2</span>], [<span class="text-cyan-400">3</span>, <span class="text-cyan-400">4</span>]]</p>
+                        <p>shallow = original.copy()</p>
+                        <p>shallow[<span class="text-cyan-400">0</span>][<span class="text-cyan-400">0</span>] = <span class="text-cyan-400">99</span></p>
+                        <p><span class="text-purple-400">print</span>(original[<span class="text-cyan-400">0</span>][<span class="text-cyan-400">0</span>]) <span class="text-amber-400"># Prints 99! Shared inner list</span></p>
+                    </div>
+                    <div class="border-t border-slate-100 pt-3 flex items-center justify-between text-xs text-slate-500">
+                        <span><i class="fa-solid fa-lightbulb text-indigo-500 mr-1"></i> Solution: Use <code class="bg-slate-100 px-1 rounded text-slate-800">copy.deepcopy()</code> for full nested independence</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- TAB 2: INTERACTIVE LAB (VISUALIZERS)       -->
+        <!-- ========================================== -->
+        <section id="tab-playground" class="space-y-6 hidden">
+            <!-- Introductory Context Banner -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                <h2 class="text-xl font-bold text-slate-800 mb-2 flex items-center gap-2">
+                    <i class="fa-solid fa-flask text-indigo-600"></i> Python Edge-Case Interactive Laboratory
+                </h2>
+                <p class="text-slate-600 text-sm leading-relaxed">
+                    Test tricky Python behaviors directly inside these 4 custom simulations. Adjust parameters, run memory operations, and watch Python's internal logic execute step-by-step.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+                <!-- LAB ITEM 1: STRING SLICER -->
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="font-bold text-slate-800 text-base"><i class="fa-solid fa-scissors text-indigo-500 mr-2"></i>String Slicing Explorer</h3>
+                            <span class="text-xs bg-indigo-50 text-indigo-700 font-mono px-2 py-0.5 rounded">s[start:stop:step]</span>
+                        </div>
+                        <p class="text-xs text-slate-500 mb-4">
+                            Visualize positive (0..N) and negative (-1..-N) indices, and watch how step size controls character selection.
+                        </p>
+
+                        <!-- Controls -->
+                        <div class="space-y-3 mb-4">
+                            <div>
+                                <label class="block text-xs font-medium text-slate-700 mb-1">Target String</label>
+                                <input type="text" id="slice-str-input" value="Artificial" oninput="updateSliceLab()" class="w-full px-3 py-1.5 border border-slate-300 rounded text-sm font-mono focus:ring-1 focus:ring-indigo-500">
+                            </div>
+                            <div class="grid grid-cols-3 gap-2">
+                                <div>
+                                    <label class="block text-xs font-medium text-slate-700 mb-1">Start Index</label>
+                                    <input type="number" id="slice-start" value="1" oninput="updateSliceLab()" class="w-full px-2 py-1 border border-slate-300 rounded text-xs font-mono">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-slate-700 mb-1">Stop Index</label>
+                                    <input type="number" id="slice-stop" value="8" oninput="updateSliceLab()" class="w-full px-2 py-1 border border-slate-300 rounded text-xs font-mono">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-slate-700 mb-1">Step</label>
+                                    <input type="number" id="slice-step" value="2" oninput="updateSliceLab()" class="w-full px-2 py-1 border border-slate-300 rounded text-xs font-mono">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Character Grid -->
+                        <div class="bg-slate-900 rounded-lg p-3 overflow-x-auto mb-3">
+                            <div class="text-slate-400 text-xs mb-1">Positive Index & Characters:</div>
+                            <div id="slice-char-grid" class="flex gap-1 py-1 font-mono text-center min-w-max">
+                                <!-- Populated dynamically -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Output box -->
+                    <div class="bg-indigo-50 border border-indigo-100 rounded-lg p-3 text-xs">
+                        <span class="text-slate-500 block mb-1">Evaluation Output:</span>
+                        <div class="font-mono text-sm font-semibold text-indigo-900">
+                            s[<span id="out-slice-code">1:8:2</span>] = <span id="out-slice-val" class="text-emerald-600 bg-white px-2 py-0.5 rounded border border-indigo-200">"riii"</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LAB ITEM 2: MEMORY COPY SIMULATOR -->
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="font-bold text-slate-800 text-base"><i class="fa-solid fa-memory text-indigo-500 mr-2"></i>RAM & Shallow Copy Simulator</h3>
+                            <span class="text-xs bg-amber-50 text-amber-700 font-mono px-2 py-0.5 rounded">aliasing vs copy</span>
+                        </div>
+                        <p class="text-xs text-slate-500 mb-4">
+                            Simulate how Python handles nested references in memory. Toggle copy strategies to see if modifying <code class="text-slate-800">b</code> alters <code class="text-slate-800">a</code>.
+                        </p>
+
+                        <!-- Strategy Selector -->
+                        <div class="mb-4">
+                            <label class="block text-xs font-medium text-slate-700 mb-1">Select Assignment Strategy:</label>
+                            <select id="copy-strategy" onchange="runCopySimulation()" class="w-full px-3 py-1.5 border border-slate-300 rounded text-xs font-mono">
+                                <option value="alias">Direct Assignment (b = a)</option>
+                                <option value="shallow" selected>Shallow Copy (b = a.copy())</option>
+                                <option value="deep">Deep Copy (b = copy.deepcopy(a))</option>
+                            </select>
+                        </div>
+
+                        <!-- Action Button -->
+                        <button onclick="mutateCopySim()" class="w-full mb-4 bg-slate-800 hover:bg-slate-900 text-white py-1.5 px-3 rounded text-xs font-medium transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-bolt text-amber-400"></i> Mutate Inner Element: <code class="font-mono text-amber-300">b[0][0] = 99</code>
+                        </button>
+
+                        <!-- Memory visual layout -->
+                        <div class="grid grid-cols-2 gap-3 font-mono text-xs mb-3">
+                            <div class="border border-slate-200 rounded-lg p-2.5 bg-slate-50">
+                                <div class="text-slate-500 text-[10px] uppercase font-bold mb-1">Variable 'a' (Original)</div>
+                                <div id="mem-a-state" class="bg-white p-2 rounded border border-slate-200 text-slate-800 font-semibold">
+                                    [[1, 2], [3, 4]]
+                                </div>
+                            </div>
+                            <div class="border border-slate-200 rounded-lg p-2.5 bg-slate-50">
+                                <div class="text-slate-500 text-[10px] uppercase font-bold mb-1">Variable 'b' (Copy)</div>
+                                <div id="mem-b-state" class="bg-white p-2 rounded border border-slate-200 text-slate-800 font-semibold">
+                                    [[1, 2], [3, 4]]
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Explanation -->
+                    <div id="copy-explanation-box" class="bg-amber-50 border border-amber-200 rounded-lg p-3 text-xs text-amber-900">
+                        Select a mode and click mutate to test memory behavior!
+                    </div>
+                </div>
+
+                <!-- LAB ITEM 3: NEGATIVE FLOOR DIVISION -->
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="font-bold text-slate-800 text-base"><i class="fa-solid fa-calculator text-indigo-500 mr-2"></i>Floor Division & Modulo Lab</h3>
+                            <span class="text-xs bg-emerald-50 text-emerald-700 font-mono px-2 py-0.5 rounded">// vs / vs %</span>
+                        </div>
+                        <p class="text-xs text-slate-500 mb-4">
+                            Python floor division (<code class="bg-slate-100 px-1 rounded text-slate-800">//</code>) always rounds down toward negative infinity. Test negative numbers to avoid exam mistakes.
+                        </p>
+
+                        <div class="grid grid-cols-2 gap-3 mb-4">
+                            <div>
+                                <label class="block text-xs font-medium text-slate-700 mb-1">Numerator (A)</label>
+                                <input type="number" id="div-num-a" value="-10" oninput="updateDivLab()" class="w-full px-3 py-1.5 border border-slate-300 rounded text-xs font-mono">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-slate-700 mb-1">Denominator (B)</label>
+                                <input type="number" id="div-num-b" value="3" oninput="updateDivLab()" class="w-full px-3 py-1.5 border border-slate-300 rounded text-xs font-mono">
+                            </div>
+                        </div>
+
+                        <!-- Division Breakdown Grid -->
+                        <div class="grid grid-cols-3 gap-2 font-mono text-center text-xs mb-3">
+                            <div class="bg-slate-50 p-2 border border-slate-200 rounded">
+                                <span class="text-[10px] text-slate-400 block">True Division (/)</span>
+                                <span id="out-div-true" class="text-sm font-bold text-slate-700">-3.33</span>
+                            </div>
+                            <div class="bg-indigo-50 p-2 border border-indigo-200 rounded">
+                                <span class="text-[10px] text-indigo-500 block">Floor Div (//)</span>
+                                <span id="out-div-floor" class="text-sm font-bold text-indigo-700">-4</span>
+                            </div>
+                            <div class="bg-slate-50 p-2 border border-slate-200 rounded">
+                                <span class="text-[10px] text-slate-400 block">Modulo (%)</span>
+                                <span id="out-div-mod" class="text-sm font-bold text-slate-700">2</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="div-explanation-box" class="bg-slate-100 border border-slate-200 rounded-lg p-3 text-xs text-slate-700">
+                        Explanation updates live with parameters.
+                    </div>
+                </div>
+
+                <!-- LAB ITEM 4: MATCH / CASE EVALUATOR -->
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="font-bold text-slate-800 text-base"><i class="fa-solid fa-code-branch text-indigo-500 mr-2"></i>Match/Case Flow Evaluator</h3>
+                            <span class="text-xs bg-purple-50 text-purple-700 font-mono px-2 py-0.5 rounded">Python 3.10+</span>
+                        </div>
+                        <p class="text-xs text-slate-500 mb-4">
+                            Test structural coordinate tuple matching with guards and wildcard patterns.
+                        </p>
+
+                        <div class="grid grid-cols-2 gap-3 mb-4">
+                            <div>
+                                <label class="block text-xs font-medium text-slate-700 mb-1">Point X</label>
+                                <input type="number" id="match-x" value="0" oninput="updateMatchLab()" class="w-full px-3 py-1.5 border border-slate-300 rounded text-xs font-mono">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-slate-700 mb-1">Point Y</label>
+                                <input type="number" id="match-y" value="5" oninput="updateMatchLab()" class="w-full px-3 py-1.5 border border-slate-300 rounded text-xs font-mono">
+                            </div>
+                        </div>
+
+                        <!-- Match Cases Step Flow -->
+                        <div class="space-y-1.5 font-mono text-xs mb-3">
+                            <div id="case-branch-1" class="p-2 rounded border border-slate-200 bg-slate-50 text-slate-500">
+                                <span>case (x, y) if x == y:</span> <span class="text-[10px] text-slate-400 float-right">Guard Check</span>
+                            </div>
+                            <div id="case-branch-2" class="p-2 rounded border border-emerald-300 bg-emerald-50 text-emerald-800 font-bold">
+                                <span>case (0, y):</span> <span class="text-[10px] text-emerald-600 float-right">Y-Axis Match</span>
+                            </div>
+                            <div id="case-branch-3" class="p-2 rounded border border-slate-200 bg-slate-50 text-slate-500">
+                                <span>case (x, 0):</span> <span class="text-[10px] text-slate-400 float-right">X-Axis Match</span>
+                            </div>
+                            <div id="case-branch-4" class="p-2 rounded border border-slate-200 bg-slate-50 text-slate-500">
+                                <span>case _:</span> <span class="text-[10px] text-slate-400 float-right">Wildcard Default</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-indigo-50 border border-indigo-100 rounded-lg p-3 text-xs text-indigo-900">
+                        <span class="text-slate-500 block mb-0.5">Printed Result:</span>
+                        <span id="out-match-result" class="font-mono text-sm font-bold text-indigo-950">"Y-axis: 5"</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- TAB 3: PRACTICE EXAM QUIZ ENGINE           -->
+        <!-- ========================================== -->
+        <section id="tab-quiz" class="space-y-6 hidden">
+            <!-- Introductory Context Banner -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-xl font-bold text-slate-800 mb-1 flex items-center gap-2">
+                        <i class="fa-solid fa-graduation-cap text-indigo-600"></i> Python Mastery Examination
+                    </h2>
+                    <p class="text-slate-600 text-sm">
+                        Test your conceptual understanding and code output accuracy across all 10 exam questions derived from your course syllabus.
+                    </p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="text-right">
+                        <div class="text-xs text-slate-400 uppercase font-semibold">Current Score</div>
+                        <div id="quiz-score-display" class="text-xl font-bold text-indigo-600 font-mono">0 / 10</div>
+                    </div>
+                    <button onclick="restartQuiz()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-2 rounded-lg text-xs font-semibold transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-rotate-right"></i> Reset Exam
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quiz Card Container -->
+            <div id="quiz-card" class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                <!-- Question Progress Bar -->
+                <div class="w-full bg-slate-100 h-2">
+                    <div id="quiz-progress" class="bg-indigo-600 h-2 w-1/10 transition-all duration-300"></div>
+                </div>
+
+                <div class="p-6">
+                    <!-- Header Meta -->
+                    <div class="flex items-center justify-between mb-4">
+                        <span id="quiz-q-num" class="text-xs font-mono font-bold bg-indigo-100 text-indigo-800 px-2.5 py-1 rounded-full">
+                            Question 1 of 10
+                        </span>
+                        <span id="quiz-q-category" class="text-xs text-slate-500 font-medium">
+                            Strings & Slicing
+                        </span>
+                    </div>
+
+                    <!-- Question Prompt -->
+                    <h3 id="quiz-q-prompt" class="text-base sm:text-lg font-bold text-slate-800 mb-4 leading-snug">
+                        Loading Question...
+                    </h3>
+
+                    <!-- Optional Code Snippet Block -->
+                    <div id="quiz-q-code-container" class="mb-5">
+                        <pre id="quiz-q-code" class="bg-slate-900 text-slate-100 p-4 rounded-xl text-xs sm:text-sm font-mono overflow-x-auto border border-slate-800">
+                        </pre>
+                    </div>
+
+                    <!-- Options List -->
+                    <div id="quiz-options-container" class="space-y-3 mb-6">
+                        <!-- Options injected dynamically -->
+                    </div>
+
+                    <!-- Rationale / Feedback Box -->
+                    <div id="quiz-feedback-box" class="hidden mb-6 p-4 rounded-xl border text-sm transition">
+                        <div class="flex items-center gap-2 font-bold mb-1" id="quiz-feedback-title">
+                            <!-- Correct / Incorrect Header -->
+                        </div>
+                        <p id="quiz-feedback-text" class="text-slate-700 text-xs sm:text-sm leading-relaxed">
+                            <!-- Rationale text -->
+                        </p>
+                    </div>
+
+                    <!-- Action Controls -->
+                    <div class="flex items-center justify-between border-t border-slate-100 pt-4">
+                        <button id="quiz-prev-btn" onclick="prevQuestion()" class="px-4 py-2 text-slate-500 hover:text-slate-800 text-xs font-semibold rounded-lg disabled:opacity-30 disabled:hover:text-slate-500">
+                            <i class="fa-solid fa-arrow-left mr-1"></i> Previous
+                        </button>
+                        <button id="quiz-submit-btn" onclick="submitAnswer()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 text-xs font-semibold rounded-lg shadow-sm transition">
+                            Submit Answer
+                        </button>
+                        <button id="quiz-next-btn" onclick="nextQuestion()" class="hidden bg-slate-800 hover:bg-slate-900 text-white px-5 py-2 text-xs font-semibold rounded-lg shadow-sm transition">
+                            Next Question <i class="fa-solid fa-arrow-right ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quiz Summary Screen (Initially Hidden) -->
+            <div id="quiz-summary-card" class="hidden bg-white p-8 rounded-2xl border border-slate-200 shadow-sm text-center max-w-2xl mx-auto">
+                <div class="w-16 h-16 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mx-auto text-2xl mb-4">
+                    <i class="fa-solid fa-trophy"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-slate-800 mb-2">Examination Completed!</h3>
+                <p class="text-slate-600 text-sm mb-6">Here is your detailed overall score and performance summary.</p>
+
+                <div class="bg-slate-50 border border-slate-200 rounded-xl p-6 mb-6 inline-block w-full max-w-sm">
+                    <div class="text-xs text-slate-400 uppercase font-semibold mb-1">Final Mark</div>
+                    <div id="summary-score-pct" class="text-4xl font-extrabold text-indigo-600 font-mono mb-2">0%</div>
+                    <div id="summary-score-text" class="text-sm font-semibold text-slate-700">0 out of 10 Correct</div>
+                </div>
+
+                <div class="flex justify-center gap-3">
+                    <button onclick="restartQuiz()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-lg text-xs font-semibold transition">
+                        <i class="fa-solid fa-rotate-right mr-1.5"></i> Retake Examination
+                    </button>
+                    <button onclick="switchTab('analytics')" class="bg-slate-800 hover:bg-slate-900 text-white px-5 py-2.5 rounded-lg text-xs font-semibold transition">
+                        <i class="fa-solid fa-chart-pie mr-1.5"></i> View Topic Analytics
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- TAB 4: DIAGNOSTIC PERFORMANCE ANALYTICS    -->
+        <!-- ========================================== -->
+        <section id="tab-analytics" class="space-y-6 hidden">
+            <!-- Introductory Context Banner -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                <h2 class="text-xl font-bold text-slate-800 mb-1 flex items-center gap-2">
+                    <i class="fa-solid fa-chart-pie text-indigo-600"></i> Course Performance & Mastery Breakdown
+                </h2>
+                <p class="text-slate-600 text-sm">
+                    Analyze topic weighting across the course syllabus and track your practice exam performance across core domains.
+                </p>
+            </div>
+
+            <!-- Metric Cards Row -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <span class="text-[10px] text-slate-400 uppercase font-bold block mb-1">Total Exam Questions</span>
+                    <span class="text-2xl font-extrabold text-slate-800 font-mono">10</span>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <span class="text-[10px] text-slate-400 uppercase font-bold block mb-1">Attempted</span>
+                    <span id="metric-attempted" class="text-2xl font-extrabold text-indigo-600 font-mono">0</span>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <span class="text-[10px] text-slate-400 uppercase font-bold block mb-1">Accuracy Rate</span>
+                    <span id="metric-accuracy" class="text-2xl font-extrabold text-emerald-600 font-mono">0%</span>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <span class="text-[10px] text-slate-400 uppercase font-bold block mb-1">Focus Area</span>
+                    <span id="metric-focus" class="text-sm font-bold text-amber-600 truncate block mt-1">Nested Copying</span>
+                </div>
+            </div>
+
+            <!-- Chart Containers Row -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <!-- Topic Weight Radar Chart -->
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-bold text-slate-800 text-sm mb-1">
+                            <i class="fa-solid fa-chart-radar text-indigo-500 mr-1.5"></i> Syllabus Topic Weight Distribution
+                        </h3>
+                        <p class="text-xs text-slate-500 mb-4">Relative weight of lecture topics tested on the AL2001 exam.</p>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="topicRadarChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Quiz Accuracy Bar Chart -->
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-bold text-slate-800 text-sm mb-1">
+                            <i class="fa-solid fa-chart-column text-indigo-500 mr-1.5"></i> Category Accuracy Breakdown
+                        </h3>
+                        <p class="text-xs text-slate-500 mb-4">Live percentage accuracy based on your practice exam responses.</p>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="accuracyBarChart"></canvas>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-slate-200 py-4 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500">
+            AL2001 Programming for AI Study Tool &bull; Single-Page Interactive Learning Suite
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // ==========================================
+        // DATA STRUCTURES & EXAM DATA
+        // ==========================================
+        const quizData = [
+            {
+                id: 1,
+                category: "Strings & Slicing",
+                question: "Consider the string `s = \"Artificial\"`. What is the output of the slice `s[1:8:2]`?",
+                code: "s = \"Artificial\"\nprint(s[1:8:2])",
+                options: ["\"rti\"", "\"riii\"", "\"art\"", "\"Aifi\""],
+                correctIndex: 1,
+                explanation: "Indexing starts at 0. `s[1]` is 'r'. Stop index 8 is non-inclusive. Stepping by 2 selects indices 1 ('r'), 3 ('i'), 5 ('i'), and 7 ('i'), producing \"riii\"."
+            },
+            {
+                id: 2,
+                category: "Data Structures",
+                question: "What is the output of the following shallow copy memory snippet?",
+                code: "original = [[1, 2], [3, 4]]\nshallow = original.copy()\nshallow[0][0] = 99\nprint(original[0][0])",
+                options: ["1", "99", "[[99, 2]]", "Error"],
+                correctIndex: 1,
+                explanation: "The `.copy()` method creates a shallow copy. While the outer list is a new object, the nested sublists are shared references in memory. Mutating `shallow[0][0]` mutates `original[0][0]` as well."
+            },
+            {
+                id: 3,
+                category: "Data Structures",
+                question: "Which of the following statements about the list `.sort()` method is correct?",
+                code: null,
+                options: [
+                    "The sort() method returns a new sorted list.",
+                    "The sort() method sorts the list in place and returns None.",
+                    "The sort() method works on both lists and immutable tuples.",
+                    "The sort() method automatically creates a deep copy."
+                ],
+                correctIndex: 1,
+                explanation: "List mutator methods like `.sort()`, `.reverse()`, and `.append()` alter the list in place and explicitly return `None`."
+            },
+            {
+                id: 4,
+                category: "Control Flow",
+                question: "What will be the output of the following Boolean evaluation?",
+                code: "print(all([[0], []]) and any([[], [0]]))",
+                options: ["True", "False", "None", "SyntaxError"],
+                correctIndex: 1,
+                explanation: "`all([[0], []])` evaluates to `False` because the second element is an empty list `[]` (which is falsy). Since `all(...)` returns `False`, the logical `and` short-circuits to `False`."
+            },
+            {
+                id: 5,
+                category: "Strings & Slicing",
+                question: "What is the final value of the variable `text` after executing this code?",
+                code: "text = \"  Python  \"\ntext.strip()\ntext.lower()",
+                options: ["\"python\"", "\"Python\"", "\"  Python  \"", "\"  python  \""],
+                correctIndex: 2,
+                explanation: "Strings are immutable in Python! Methods like `.strip()` and `.lower()` return brand new string instances. Because the outputs were not reassigned (`text = text.strip()`), `text` remains unchanged as `\"  Python  \"`."
+            },
+            {
+                id: 6,
+                category: "Basics & Ops",
+                question: "What is the correct output of the floor division `print(-10 // 3)`?",
+                code: "print(-10 // 3)",
+                options: ["-3", "-3.33", "-4", "3"],
+                correctIndex: 2,
+                explanation: "Floor division (`//`) always rounds down to the nearest lower integer. $-10 / 3 = -3.333$. Rounding down towards negative infinity yields `-4`."
+            },
+            {
+                id: 7,
+                category: "Control Flow",
+                question: "Consider the pattern matching code. What is printed?",
+                code: "point = (0, 5)\nmatch point:\n    case (x, y) if x == y:\n        print(\"Diagonal\")\n    case (0, y):\n        print(f\"Y-axis: {y}\")\n    case _:\n        print(\"Other\")",
+                options: ["Diagonal", "Y-axis: 5", "Other", "SyntaxError"],
+                correctIndex: 1,
+                explanation: "`point` is `(0, 5)`. The guard `x == y` fails (0 != 5). Case 2 `(0, y)` structural match succeeds, binding `y` to `5`, printing `\"Y-axis: 5\"`."
+            },
+            {
+                id: 8,
+                category: "Data Structures",
+                question: "How many elements will be in `my_list` after executing this code?",
+                code: "my_list = [1, 2]\nmy_tuple = (3, 4)\nmy_list.extend(my_tuple)\nmy_list.append([5, 6])",
+                options: ["4", "5", "6", "3"],
+                correctIndex: 1,
+                explanation: "1) `my_list` starts with 2 elements: `[1, 2]`. 2) `.extend((3, 4))` unpacks the tuple, adding 3 and 4 -> 4 elements `[1, 2, 3, 4]`. 3) `.append([5, 6])` adds the list as a single nested element -> 5 elements total."
+            },
+            {
+                id: 9,
+                category: "Control Flow",
+                question: "If you need an `if` statement block to be empty during development to avoid an `IndentationError`, which placeholder is invalid?",
+                code: "if condition:\n    # What placeholder cannot be used here directly?",
+                options: ["pass", "...", "continue", "A comment string"],
+                correctIndex: 2,
+                explanation: "`continue` is a loop control statement and raises a `SyntaxError` if placed outside a `for` or `while` loop. `pass` and `...` (Ellipsis) are valid placeholders."
+            },
+            {
+                id: 10,
+                category: "Data Structures",
+                question: "Given the code snippet below, what is the final state of the list `data`?",
+                code: "data = [10, 20, 30, 40, 50]\ndata.pop(2)\ndata.remove(50)",
+                options: ["[10, 20, 40]", "[10, 20, 30]", "[20, 40, 50]", "[10, 40]"],
+                correctIndex: 0,
+                explanation: "`pop(2)` removes item at index 2 (value `30`), leaving `[10, 20, 40, 50]`. `.remove(50)` searches for value `50` and removes it, leaving `[10, 20, 40]`."
+            }
+        ];
+
+        // Global State Variables
+        let currentTab = 'explorer';
+        let userAnswers = new Array(quizData.length).fill(null);
+        let currentQuizIndex = 0;
+        let copySimMutated = false;
+
+        // Chart instances
+        let radarChartInstance = null;
+        let barChartInstance = null;
+
+        // ==========================================
+        // NAVIGATION & TAB SWITCHING
+        // ==========================================
+        function switchTab(tabId) {
+            currentTab = tabId;
+            ['explorer', 'playground', 'quiz', 'analytics'].forEach(tab => {
+                const tabEl = document.getElementById(`tab-${tab}`);
+                const navBtn = document.getElementById(`nav-${tab}`);
+                const mobileBtn = document.getElementById(`mobile-nav-${tab}`);
+
+                if (tab === tabId) {
+                    tabEl.classList.remove('hidden');
+                    if(navBtn) {
+                        navBtn.className = "nav-btn text-indigo-400 bg-slate-800 px-3 py-2 rounded-md text-sm font-medium flex items-center gap-2 transition";
+                    }
+                    if(mobileBtn) {
+                        mobileBtn.className = "text-indigo-400 p-2 text-center flex flex-col items-center";
+                    }
+                } else {
+                    tabEl.classList.add('hidden');
+                    if(navBtn) {
+                        navBtn.className = "nav-btn text-slate-300 hover:text-white hover:bg-slate-800 px-3 py-2 rounded-md text-sm font-medium flex items-center gap-2 transition";
+                    }
+                    if(mobileBtn) {
+                        mobileBtn.className = "text-slate-400 p-2 text-center flex flex-col items-center";
+                    }
+                }
+            });
+
+            if (tabId === 'analytics') {
+                renderCharts();
+            }
+        }
+
+        // ==========================================
+        // TAB 1: EXPLORER FILTER LOGIC
+        // ==========================================
+        function filterStudyCards() {
+            const query = document.getElementById('study-search').value.toLowerCase();
+            const cards = document.querySelectorAll('.study-card');
+
+            cards.forEach(card => {
+                const keywords = card.getAttribute('data-keywords').toLowerCase();
+                const text = card.innerText.toLowerCase();
+                if (keywords.includes(query) || text.includes(query)) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+
+        function filterCategory(cat) {
+            const buttons = document.querySelectorAll('.cat-filter-btn');
+            buttons.forEach(btn => {
+                btn.className = "cat-filter-btn bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap";
+            });
+            event.target.className = "cat-filter-btn active bg-indigo-50 text-indigo-700 border border-indigo-200 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap";
+
+            const cards = document.querySelectorAll('.study-card');
+            cards.forEach(card => {
+                if (cat === 'all' || card.getAttribute('data-category') === cat) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+
+        // ==========================================
+        // TAB 2: INTERACTIVE LAB SIMULATORS
+        // ==========================================
+        // 1. String Slicing Lab
+        function updateSliceLab() {
+            const str = document.getElementById('slice-str-input').value || "Artificial";
+            const start = parseInt(document.getElementById('slice-start').value) || 0;
+            const stop = parseInt(document.getElementById('slice-stop').value) || str.length;
+            const step = parseInt(document.getElementById('slice-step').value) || 1;
+
+            const gridContainer = document.getElementById('slice-char-grid');
+            gridContainer.innerHTML = '';
+
+            // Compute indices selected by Python slice
+            const selectedIndices = [];
+            if (step > 0) {
+                for (let i = start; i < stop && i < str.length; i += step) {
+                    if (i >= 0) selectedIndices.push(i);
+                }
+            } else if (step < 0) {
+                for (let i = start; i > stop && i >= 0; i += step) {
+                    if (i < str.length) selectedIndices.push(i);
+                }
+            }
+
+            // Render characters with index badges
+            for (let i = 0; i < str.length; i++) {
+                const isSelected = selectedIndices.includes(i);
+                const charBox = document.createElement('div');
+                charBox.className = `flex flex-col items-center p-1 rounded border text-xs min-w-[28px] ${
+                    isSelected ? 'bg-emerald-500 text-white border-emerald-400 font-bold' : 'bg-slate-800 text-slate-300 border-slate-700'
+                }`;
+
+                const posIndex = i;
+                const negIndex = i - str.length;
+
+                charBox.innerHTML = `
+                    <span class="text-[9px] opacity-75">${posIndex}</span>
+                    <span class="text-sm my-0.5">'${str[i]}'</span>
+                    <span class="text-[9px] opacity-75">${negIndex}</span>
+                `;
+                gridContainer.appendChild(charBox);
+            }
+
+            // Slice output calculation
+            let result = "";
+            try {
+                // Approximate JS slice for standard dynamic display
+                if (step === 1) {
+                    result = str.slice(start, stop);
+                } else {
+                    let chars = [];
+                    if (step > 0) {
+                        for (let i = start; i < stop && i < str.length; i += step) {
+                            if (i >= 0) chars.push(str[i]);
+                        }
+                    } else {
+                        for (let i = start; i > stop && i >= 0; i += step) {
+                            if (i < str.length) chars.push(str[i]);
+                        }
+                    }
+                    result = chars.join('');
+                }
+            } catch (e) {
+                result = "Error";
+            }
+
+            document.getElementById('out-slice-code').innerText = `${start}:${stop}:${step}`;
+            document.getElementById('out-slice-val').innerText = `"${result}"`;
+        }
+
+        // 2. RAM & Copy Simulator
+        function runCopySimulation() {
+            copySimMutated = false;
+            const strat = document.getElementById('copy-strategy').value;
+            const expBox = document.getElementById('copy-explanation-box');
+
+            document.getElementById('mem-a-state').innerText = "[[1, 2], [3, 4]]";
+            document.getElementById('mem-b-state').innerText = "[[1, 2], [3, 4]]";
+
+            if (strat === 'alias') {
+                expBox.innerText = "Alias created (b = a). Variables 'a' and 'b' point to the exact same outer object address in RAM.";
+            } else if (strat === 'shallow') {
+                expBox.innerText = "Shallow copy created (b = a.copy()). Variable 'b' gets a new outer list container, but inner nested sublists still share memory references!";
+            } else {
+                expBox.innerText = "Deep copy created (copy.deepcopy(a)). Full recursive duplication. Variables 'a' and 'b' are completely independent.";
+            }
+        }
+
+        function mutateCopySim() {
+            copySimMutated = true;
+            const strat = document.getElementById('copy-strategy').value;
+            const expBox = document.getElementById('copy-explanation-box');
+
+            if (strat === 'alias') {
+                document.getElementById('mem-a-state').innerText = "[[99, 2], [3, 4]]";
+                document.getElementById('mem-b-state').innerText = "[[99, 2], [3, 4]]";
+                expBox.innerHTML = "<strong class='text-rose-700'>Mutated!</strong> Since 'b' is an alias of 'a', modifying `b[0][0]` modified `a[0][0]` as well!";
+            } else if (strat === 'shallow') {
+                document.getElementById('mem-a-state').innerText = "[[99, 2], [3, 4]]";
+                document.getElementById('mem-b-state').innerText = "[[99, 2], [3, 4]]";
+                expBox.innerHTML = "<strong class='text-amber-800'>Shallow Mutation!</strong> Even though `b` is a copied outer list, the inner list `[1, 2]` is shared! Modifying `b[0][0]` altered `a[0][0]`!";
+            } else {
+                document.getElementById('mem-a-state').innerText = "[[1, 2], [3, 4]]";
+                document.getElementById('mem-b-state').innerText = "[[99, 2], [3, 4]]";
+                expBox.innerHTML = "<strong class='text-emerald-800'>Independent!</strong> Deep copy duplicated inner memory. Modifying `b[0][0]` left `a[0][0]` completely untouched!";
+            }
+        }
+
+        // 3. Division Lab
+        function updateDivLab() {
+            const a = parseFloat(document.getElementById('div-num-a').value) || 0;
+            const b = parseFloat(document.getElementById('div-num-b').value) || 1;
+
+            const trueDiv = a / b;
+            const floorDiv = Math.floor(a / b);
+            const mod = ((a % b) + b) % b; // Python modulo math for negative dividends
+
+            document.getElementById('out-div-true').innerText = trueDiv.toFixed(2);
+            document.getElementById('out-div-floor').innerText = floorDiv;
+            document.getElementById('out-div-mod').innerText = mod;
+
+            const exp = document.getElementById('div-explanation-box');
+            if (a < 0) {
+                exp.innerHTML = `<i class="fa-solid fa-circle-info text-indigo-500 mr-1"></i> <strong>Negative Floor Rule:</strong> True quotient is ${trueDiv.toFixed(2)}. Floor division rounds DOWN towards negative infinity to standard integer <strong>${floorDiv}</strong>.`;
+            } else {
+                exp.innerHTML = `<i class="fa-solid fa-circle-info text-indigo-500 mr-1"></i> Standard Division: True quotient is ${trueDiv.toFixed(2)}. Floor division truncates/rounds down to integer <strong>${floorDiv}</strong>.`;
+            }
+        }
+
+        // 4. Match/Case Lab
+        function updateMatchLab() {
+            const x = parseInt(document.getElementById('match-x').value) || 0;
+            const y = parseInt(document.getElementById('match-y').value) || 0;
+
+            const b1 = document.getElementById('case-branch-1');
+            const b2 = document.getElementById('case-branch-2');
+            const b3 = document.getElementById('case-branch-3');
+            const b4 = document.getElementById('case-branch-4');
+            const res = document.getElementById('out-match-result');
+
+            [b1, b2, b3, b4].forEach(b => {
+                b.className = "p-2 rounded border border-slate-200 bg-slate-50 text-slate-500";
+            });
+
+            if (x === y) {
+                b1.className = "p-2 rounded border border-emerald-300 bg-emerald-50 text-emerald-800 font-bold";
+                res.innerText = `"Diagonal"`;
+            } else if (x === 0) {
+                b2.className = "p-2 rounded border border-emerald-300 bg-emerald-50 text-emerald-800 font-bold";
+                res.innerText = `"Y-axis: ${y}"`;
+            } else if (y === 0) {
+                b3.className = "p-2 rounded border border-emerald-300 bg-emerald-50 text-emerald-800 font-bold";
+                res.innerText = `"X-axis: ${x}"`;
+            } else {
+                b4.className = "p-2 rounded border border-emerald-300 bg-emerald-50 text-emerald-800 font-bold";
+                res.innerText = `"Other"`;
+            }
+        }
+
+        // ==========================================
+        // TAB 3: QUIZ ENGINE LOGIC
+        // ==========================================
+        function loadQuestion(index) {
+            currentQuizIndex = index;
+            const q = quizData[index];
+
+            document.getElementById('quiz-q-num').innerText = `Question ${index + 1} of ${quizData.length}`;
+            document.getElementById('quiz-q-category').innerText = q.category;
+            document.getElementById('quiz-q-prompt').innerText = q.question;
+
+            // Progress bar update
+            document.getElementById('quiz-progress').style.width = `${((index + 1) / quizData.length) * 100}%`;
+
+            // Code snippet container
+            const codeContainer = document.getElementById('quiz-q-code-container');
+            if (q.code) {
+                codeContainer.classList.remove('hidden');
+                document.getElementById('quiz-q-code').innerText = q.code;
+            } else {
+                codeContainer.classList.add('hidden');
+            }
+
+            // Render options
+            const optionsContainer = document.getElementById('quiz-options-container');
+            optionsContainer.innerHTML = '';
+
+            const currentAnswer = userAnswers[index];
+
+            q.options.forEach((opt, optIndex) => {
+                const optBtn = document.createElement('button');
+                optBtn.onclick = () => selectOption(optIndex);
+
+                let btnStyle = "w-full text-left p-3.5 rounded-xl border border-slate-200 hover:bg-slate-50 font-mono text-xs sm:text-sm flex items-center justify-between transition";
+
+                if (currentAnswer !== null) {
+                    if (optIndex === q.correctIndex) {
+                        btnStyle = "w-full text-left p-3.5 rounded-xl border border-emerald-300 bg-emerald-50 text-emerald-900 font-mono text-xs sm:text-sm flex items-center justify-between font-semibold";
+                    } else if (optIndex === currentAnswer && currentAnswer !== q.correctIndex) {
+                        btnStyle = "w-full text-left p-3.5 rounded-xl border border-rose-300 bg-rose-50 text-rose-900 font-mono text-xs sm:text-sm flex items-center justify-between";
+                    }
+                } else if (currentAnswer === optIndex) {
+                    btnStyle = "w-full text-left p-3.5 rounded-xl border-2 border-indigo-600 bg-indigo-50 font-mono text-xs sm:text-sm flex items-center justify-between";
+                }
+
+                optBtn.className = btnStyle;
+                optBtn.innerHTML = `
+                    <span>${opt}</span>
+                    ${currentAnswer !== null && optIndex === q.correctIndex ? '<i class="fa-solid fa-circle-check text-emerald-600"></i>' : ''}
+                    ${currentAnswer !== null && optIndex === currentAnswer && currentAnswer !== q.correctIndex ? '<i class="fa-solid fa-circle-xmark text-rose-600"></i>' : ''}
+                `;
+                optionsContainer.appendChild(optBtn);
+            });
+
+            // Feedback / Rationale box
+            const feedbackBox = document.getElementById('quiz-feedback-box');
+            const submitBtn = document.getElementById('quiz-submit-btn');
+            const nextBtn = document.getElementById('quiz-next-btn');
+
+            if (currentAnswer !== null) {
+                feedbackBox.classList.remove('hidden');
+                const isCorrect = currentAnswer === q.correctIndex;
+
+                if (isCorrect) {
+                    feedbackBox.className = "mb-6 p-4 rounded-xl border border-emerald-200 bg-emerald-50/70 text-emerald-900 text-sm";
+                    document.getElementById('quiz-feedback-title').innerHTML = `<i class="fa-solid fa-circle-check text-emerald-600"></i> Correct Answer!`;
+                } else {
+                    feedbackBox.className = "mb-6 p-4 rounded-xl border border-rose-200 bg-rose-50/70 text-rose-900 text-sm";
+                    document.getElementById('quiz-feedback-title').innerHTML = `<i class="fa-solid fa-circle-xmark text-rose-600"></i> Incorrect`;
+                }
+                document.getElementById('quiz-feedback-text').innerText = q.explanation;
+
+                submitBtn.classList.add('hidden');
+                nextBtn.classList.remove('hidden');
+            } else {
+                feedbackBox.classList.add('hidden');
+                submitBtn.classList.remove('hidden');
+                nextBtn.classList.add('hidden');
+            }
+
+            // Previous Button state
+            document.getElementById('quiz-prev-btn').disabled = (index === 0);
+        }
+
+        let selectedOptTemp = null;
+        function selectOption(optIndex) {
+            if (userAnswers[currentQuizIndex] !== null) return; // Answer locked
+            selectedOptTemp = optIndex;
+
+            const optionsContainer = document.getElementById('quiz-options-container');
+            Array.from(optionsContainer.children).forEach((child, idx) => {
+                if (idx === optIndex) {
+                    child.className = "w-full text-left p-3.5 rounded-xl border-2 border-indigo-600 bg-indigo-50 font-mono text-xs sm:text-sm flex items-center justify-between";
+                } else {
+                    child.className = "w-full text-left p-3.5 rounded-xl border border-slate-200 hover:bg-slate-50 font-mono text-xs sm:text-sm flex items-center justify-between transition";
+                }
+            });
+        }
+
+        function submitAnswer() {
+            if (selectedOptTemp === null) return;
+            userAnswers[currentQuizIndex] = selectedOptTemp;
+            selectedOptTemp = null;
+
+            updateScoreBadge();
+            loadQuestion(currentQuizIndex);
+        }
+
+        function nextQuestion() {
+            if (currentQuizIndex < quizData.length - 1) {
+                loadQuestion(currentQuizIndex + 1);
+            } else {
+                showQuizSummary();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuizIndex > 0) {
+                loadQuestion(currentQuizIndex - 1);
+            }
+        }
+
+        function updateScoreBadge() {
+            let correctCount = 0;
+            userAnswers.forEach((ans, idx) => {
+                if (ans === quizData[idx].correctIndex) correctCount++;
+            });
+            document.getElementById('quiz-score-display').innerText = `${correctCount} / ${quizData.length}`;
+        }
+
+        function restartQuiz() {
+            userAnswers = new Array(quizData.length).fill(null);
+            selectedOptTemp = null;
+            updateScoreBadge();
+            document.getElementById('quiz-card').classList.remove('hidden');
+            document.getElementById('quiz-summary-card').classList.add('hidden');
+            loadQuestion(0);
+        }
+
+        function showQuizSummary() {
+            let correctCount = 0;
+            userAnswers.forEach((ans, idx) => {
+                if (ans === quizData[idx].correctIndex) correctCount++;
+            });
+
+            const pct = Math.round((correctCount / quizData.length) * 100);
+
+            document.getElementById('quiz-card').classList.add('hidden');
+            document.getElementById('quiz-summary-card').classList.remove('hidden');
+
+            document.getElementById('summary-score-pct').innerText = `${pct}%`;
+            document.getElementById('summary-score-text').innerText = `${correctCount} out of ${quizData.length} Correct`;
+        }
+
+        // ==========================================
+        // TAB 4: CHART.JS ANALYTICS
+        // ==========================================
+        function renderCharts() {
+            // Metrics computation
+            const attempted = userAnswers.filter(a => a !== null).length;
+            let correct = 0;
+            userAnswers.forEach((ans, idx) => {
+                if (ans === quizData[idx].correctIndex) correct++;
+            });
+
+            const accuracyPct = attempted > 0 ? Math.round((correct / attempted) * 100) : 0;
+
+            document.getElementById('metric-attempted').innerText = `${attempted} / ${quizData.length}`;
+            document.getElementById('metric-accuracy').innerText = `${accuracyPct}%`;
+
+            // Chart 1: Topic Weighting Radar
+            const ctxRadar = document.getElementById('topicRadarChart').getContext('2d');
+            if (radarChartInstance) radarChartInstance.destroy();
+
+            radarChartInstance = new Chart(ctxRadar, {
+                type: 'radar',
+                data: {
+                    labels: ['Variables & Ops', 'I/O Formatting', 'Strings & Slicing', 'Control Flow', 'Data Structures', 'Memory & Copying'],
+                    datasets: [{
+                        label: 'Lecture Focus Weight',
+                        data: [85, 75, 90, 85, 95, 90],
+                        backgroundColor: 'rgba(79, 70, 229, 0.2)',
+                        borderColor: '#4f46e5',
+                        borderWidth: 2,
+                        pointBackgroundColor: '#4f46e5'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            min: 0,
+                            max: 100,
+                            ticks: { display: false }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+
+            // Chart 2: Category Accuracy Bar Chart
+            const categories = ['Strings & Slicing', 'Data Structures', 'Control Flow', 'Basics & Ops'];
+            const catTotals = { 'Strings & Slicing': 0, 'Data Structures': 0, 'Control Flow': 0, 'Basics & Ops': 0 };
+            const catCorrect = { 'Strings & Slicing': 0, 'Data Structures': 0, 'Control Flow': 0, 'Basics & Ops': 0 };
+
+            quizData.forEach((q, idx) => {
+                catTotals[q.category]++;
+                if (userAnswers[idx] === q.correctIndex) {
+                    catCorrect[q.category]++;
+                }
+            });
+
+            const accuracyData = categories.map(cat => {
+                return catTotals[cat] > 0 ? Math.round((catCorrect[cat] / catTotals[cat]) * 100) : 0;
+            });
+
+            const ctxBar = document.getElementById('accuracyBarChart').getContext('2d');
+            if (barChartInstance) barChartInstance.destroy();
+
+            barChartInstance = new Chart(ctxBar, {
+                type: 'bar',
+                data: {
+                    labels: ['Strings', 'Data Structs', 'Control Flow', 'Basics & Ops'],
+                    datasets: [{
+                        label: 'Accuracy %',
+                        data: accuracyData,
+                        backgroundColor: ['#6366f1', '#10b981', '#a855f7', '#f59e0b'],
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            min: 0,
+                            max: 100,
+                            ticks: { callback: v => v + '%' }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+        }
+
+        // Initialize on Load
+        window.addEventListener('DOMContentLoaded', () => {
+            updateSliceLab();
+            runCopySimulation();
+            updateDivLab();
+            updateMatchLab();
+            loadQuestion(0);
+        });
+    </script>
+</body>
+</html>
