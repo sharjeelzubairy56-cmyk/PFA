@@ -24,7 +24,7 @@
             font-family: 'Fira Code', monospace;
         }
 
-        /* Chart container constraint rules */
+        /* Responsive Chart container constraint rules */
         .chart-container {
             position: relative;
             width: 100%;
@@ -63,18 +63,18 @@
 </head>
 <body class="min-h-screen flex flex-col">
 
-    <!-- Chosen Palette: Warm Neutral Slate & Accent Amber/Indigo -->
+    <!-- Chosen Palette: Slate Background with Indigo and Amber Accents -->
     <!-- Application Structure Plan: Designed as a 4-tab interactive learning suite for AL2001 Python for AI.
-         1) Study Explorer: Modular, searchable theory cards with code blocks and key takeaways.
-         2) Interactive Logic & Memory Playground: Live simulators for string slicing, shallow vs deep copying, negative floor division, and match/case structural pattern matching.
-         3) Exam Prep Quiz Engine: Interactive test runner for all 10 practice questions with immediate answer feedback and rationale modals.
-         4) Diagnostic Analytics Dashboard: Chart.js visualizations breaking down performance by topic area.
-         This non-linear architecture prioritizes interactive learning and edge-case testing over passive textbook reading. -->
+         1) Study Explorer: Modular, searchable theory cards with code blocks, memory traps, and key takeaways.
+         2) Interactive Logic & Memory Lab: Live interactive simulators for string slicing, shallow vs deep copying, negative floor division, match/case pattern matching, and truth values (all/any).
+         3) Exam Prep Quiz Engine: Interactive test runner for all 10 practice exam questions with real-time feedback and rationale modals.
+         4) Diagnostic Analytics Dashboard: Chart.js visualizations breaking down course topic weights and live student exam accuracy by category.
+         This non-linear structure prioritizes interactive learning and edge-case execution over passive text reading. -->
     <!-- Visualization & Content Choices:
-         1. String Slicing -> Interactive Index Grid -> HTML dynamic badge highlighting -> Goal: Visualize index bounds & step logic.
-         2. Memory & Copying -> Interactive RAM Memory Simulator -> CSS/JS box layout & reference lines -> Goal: Explain shallow vs deep copy reference sharing.
-         3. Floor Division -> Float vs Int visualizer -> HTML/CSS number line -> Goal: Clear confusion on negative rounding.
-         4. Match/Case -> Interactive Structural Flow Evaluator -> HTML step cards -> Goal: Teach Python 3.10 structural matching.
+         1. String Slicing -> Interactive Index Grid -> Dynamic badge highlighting -> Goal: Visualize index bounds & step logic.
+         2. Memory & Copying -> Interactive RAM Memory Simulator -> HTML/CSS box layout & reference indicators -> Goal: Explain shallow vs deep copy reference sharing.
+         3. Floor Division -> Float vs Int visualizer -> Dynamic result tiles -> Goal: Clear confusion on negative rounding.
+         4. Match/Case -> Interactive Structural Flow Evaluator -> Dynamic step cards -> Goal: Teach Python 3.10 structural matching.
          5. Performance Chart -> Chart.js Radar & Bar Chart -> Canvas -> Goal: Topic strength breakdown.
          NO SVG or Mermaid JS used. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
@@ -148,7 +148,7 @@
                     </span>
                     <h2 class="text-2xl sm:text-3xl font-bold mb-2">Python Fundamentals Knowledge Base</h2>
                     <p class="text-slate-300 text-sm leading-relaxed mb-4">
-                        Explore core lecture concepts covering dynamic typing, floor division, string immutability, pattern matching, and mutable memory structures. Use the search filter to quickly find exam definitions, code rules, and syntax traps.
+                        Welcome to the Study Explorer. This module provides structured lecture notes covering dynamic typing, floor division, string immutability, structural pattern matching, and mutable memory allocation. Use the search filter and category buttons below to filter key concepts and identify common exam traps.
                     </p>
                     <div class="flex flex-wrap gap-2 text-xs">
                         <span class="bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700 text-slate-300"><i class="fa-solid fa-check text-emerald-400 mr-1.5"></i> Variables & Casting</span>
@@ -167,11 +167,11 @@
                            class="w-full pl-9 pr-4 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
                 </div>
                 <div class="flex items-center gap-2 w-full sm:w-auto overflow-x-auto pb-1 sm:pb-0">
-                    <button onclick="filterCategory('all')" class="cat-filter-btn active bg-indigo-50 text-indigo-700 border border-indigo-200 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap">All Topics</button>
-                    <button onclick="filterCategory('basics')" class="cat-filter-btn bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap">Basics & Ops</button>
-                    <button onclick="filterCategory('strings')" class="cat-filter-btn bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap">Strings & Formatting</button>
-                    <button onclick="filterCategory('control')" class="cat-filter-btn bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap">Control Flow</button>
-                    <button onclick="filterCategory('structures')" class="cat-filter-btn bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap">Lists & Tuples</button>
+                    <button onclick="filterCategory('all', event)" class="cat-filter-btn active bg-indigo-50 text-indigo-700 border border-indigo-200 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap">All Topics</button>
+                    <button onclick="filterCategory('basics', event)" class="cat-filter-btn bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap">Basics & Ops</button>
+                    <button onclick="filterCategory('strings', event)" class="cat-filter-btn bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap">Strings & Formatting</button>
+                    <button onclick="filterCategory('control', event)" class="cat-filter-btn bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap">Control Flow</button>
+                    <button onclick="filterCategory('structures', event)" class="cat-filter-btn bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap">Lists & Tuples</button>
                 </div>
             </div>
 
@@ -186,7 +186,7 @@
                     </div>
                     <h3 class="text-lg font-bold text-slate-800 mb-2">Variables, Dynamic Typing & Mathematical Operators</h3>
                     <p class="text-sm text-slate-600 mb-4">
-                        Python dynamically infers variable types without explicit type declarations. However, mathematical operations enforce strict rules regarding floating-point output and rounding behavior.
+                        Python dynamically infers variable types without explicit declarations. Mathematical operations enforce strict rules regarding floating-point precision and floor division rounding toward negative infinity.
                     </p>
                     <div class="bg-slate-900 rounded-lg p-3 text-xs text-slate-200 font-mono mb-4 overflow-x-auto">
                         <p class="text-slate-400"># Floor division rounds down toward negative infinity</p>
@@ -196,7 +196,7 @@
                         <p><span class="text-purple-400">print</span>(10 % 3)     <span class="text-emerald-400"># 1 (remainder)</span></p>
                     </div>
                     <div class="border-t border-slate-100 pt-3 flex items-center justify-between text-xs text-slate-500">
-                        <span><i class="fa-solid fa-triangle-exclamation text-amber-500 mr-1"></i> Exam Trap: <code class="bg-slate-100 px-1 rounded text-slate-800">int("Hello")</code> throws ValueError</span>
+                        <span><i class="fa-solid fa-triangle-exclamation text-amber-500 mr-1"></i> Exam Trap: <code class="bg-slate-100 px-1 rounded text-slate-800">int("Hello")</code> raises a ValueError</span>
                     </div>
                 </div>
 
@@ -208,7 +208,7 @@
                     </div>
                     <h3 class="text-lg font-bold text-slate-800 mb-2">Input Processing & f-String Precision Formatting</h3>
                     <p class="text-sm text-slate-600 mb-4">
-                        <code class="bg-slate-100 px-1 py-0.5 rounded text-indigo-600">input()</code> always returns a string (<code class="bg-slate-100 px-1 py-0.5 rounded text-indigo-600">str</code>). Numbers require immediate type casting. Modern Python uses f-strings with embedded formatting specifications.
+                        The <code class="bg-slate-100 px-1 py-0.5 rounded text-indigo-600">input()</code> function always yields a string (<code class="bg-slate-100 px-1 py-0.5 rounded text-indigo-600">str</code>). Numerical operations require explicit type casting. Modern Python utilizes f-strings with precision specifiers.
                     </p>
                     <div class="bg-slate-900 rounded-lg p-3 text-xs text-slate-200 font-mono mb-4 overflow-x-auto">
                         <p>acc = <span class="text-cyan-400">0.9478</span></p>
@@ -217,7 +217,7 @@
                         <p><span class="text-purple-400">print</span>(<span class="text-emerald-300">f"{samples:,}"</span>) <span class="text-emerald-400"># "1,256,789"</span></p>
                     </div>
                     <div class="border-t border-slate-100 pt-3 flex items-center justify-between text-xs text-slate-500">
-                        <span><i class="fa-solid fa-lightbulb text-indigo-500 mr-1"></i> Note: Direct mathematical operations on <code class="bg-slate-100 px-1 rounded text-slate-800">input()</code> fail without <code class="bg-slate-100 px-1 rounded text-slate-800">int()</code>/<code class="bg-slate-100 px-1 rounded text-slate-800">float()</code></span>
+                        <span><i class="fa-solid fa-lightbulb text-indigo-500 mr-1"></i> Tip: Arithmetic on raw <code class="bg-slate-100 px-1 rounded text-slate-800">input()</code> causes a TypeError</span>
                     </div>
                 </div>
 
@@ -229,7 +229,7 @@
                     </div>
                     <h3 class="text-lg font-bold text-slate-800 mb-2">String Immutability & Slicing Syntax</h3>
                     <p class="text-sm text-slate-600 mb-4">
-                        Strings are immutable ordered sequences. Methods like <code class="bg-slate-100 px-1 rounded text-slate-800">.strip()</code> and <code class="bg-slate-100 px-1 rounded text-slate-800">.lower()</code> return <strong>NEW</strong> strings and do NOT modify the variable in place unless reassigned!
+                        Strings are immutable sequences. Methods like <code class="bg-slate-100 px-1 rounded text-slate-800">.strip()</code> and <code class="bg-slate-100 px-1 rounded text-slate-800">.lower()</code> return <strong>NEW</strong> strings and do NOT modify variables in place unless explicitly reassigned.
                     </p>
                     <div class="bg-slate-900 rounded-lg p-3 text-xs text-slate-200 font-mono mb-4 overflow-x-auto">
                         <p>s = <span class="text-emerald-300">"Artificial"</span></p>
@@ -240,19 +240,19 @@
                         <p>text.strip()     <span class="text-amber-400"># 'text' remains "  Python  "!</span></p>
                     </div>
                     <div class="border-t border-slate-100 pt-3 flex items-center justify-between text-xs text-slate-500">
-                        <span><i class="fa-solid fa-triangle-exclamation text-amber-500 mr-1"></i> Exam Trap: Failing to assign string method outputs leaves variables unchanged!</span>
+                        <span><i class="fa-solid fa-triangle-exclamation text-amber-500 mr-1"></i> Exam Trap: Unassigned string method calls do not alter the source variable!</span>
                     </div>
                 </div>
 
                 <!-- Module 4 -->
-                <div class="study-card bg-white rounded-xl border border-slate-200 shadow-sm p-5 hover:shadow-md transition" data-category="control" data-keywords="if elif else match case pattern matching structural guards pass wildcard indentation">
+                <div class="study-card bg-white rounded-xl border border-slate-200 shadow-sm p-5 hover:shadow-md transition" data-category="control" data-keywords="if elif else match case pattern matching structural guards pass wildcard indentation all any">
                     <div class="flex items-start justify-between mb-3">
                         <span class="bg-purple-100 text-purple-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">Control Flow</span>
                         <span class="text-xs text-slate-400 font-mono">Module 04</span>
                     </div>
                     <h3 class="text-lg font-bold text-slate-800 mb-2">Control Flow & Structural Pattern Matching (`match/case`)</h3>
                     <p class="text-sm text-slate-600 mb-4">
-                        Python 3.10+ introduced structural pattern matching. Features include value matching, structural unpacking, conditional guards (<code class="bg-slate-100 px-1 rounded text-slate-800">if</code>), OR patterns (<code class="bg-slate-100 px-1 rounded text-slate-800">|</code>), and the wildcard (<code class="bg-slate-100 px-1 rounded text-slate-800">_</code>).
+                        Python 3.10+ provides structural pattern matching. Features include sequence unpacking, conditional guards (<code class="bg-slate-100 px-1 rounded text-slate-800">if</code>), OR patterns (<code class="bg-slate-100 px-1 rounded text-slate-800">|</code>), and the wildcard (<code class="bg-slate-100 px-1 rounded text-slate-800">_</code>).
                     </p>
                     <div class="bg-slate-900 rounded-lg p-3 text-xs text-slate-200 font-mono mb-4 overflow-x-auto">
                         <p>point = (<span class="text-cyan-400">0</span>, <span class="text-cyan-400">5</span>)</p>
@@ -262,7 +262,7 @@
                         <p>&nbsp;&nbsp;<span class="text-purple-400">case</span> _: <span class="text-purple-400">print</span>(<span class="text-emerald-300">"Other"</span>)</p>
                     </div>
                     <div class="border-t border-slate-100 pt-3 flex items-center justify-between text-xs text-slate-500">
-                        <span><i class="fa-solid fa-lightbulb text-indigo-500 mr-1"></i> Empty blocks require <code class="bg-slate-100 px-1 rounded text-slate-800">pass</code> or <code class="bg-slate-100 px-1 rounded text-slate-800">...</code> (not <code class="bg-slate-100 px-1 rounded text-slate-800">continue</code> outside loops)</span>
+                        <span><i class="fa-solid fa-lightbulb text-indigo-500 mr-1"></i> Empty statement blocks require <code class="bg-slate-100 px-1 rounded text-slate-800">pass</code> or <code class="bg-slate-100 px-1 rounded text-slate-800">...</code></span>
                     </div>
                 </div>
 
@@ -274,7 +274,7 @@
                     </div>
                     <h3 class="text-lg font-bold text-slate-800 mb-2">Lists vs. Tuples: Mutability & Methods</h3>
                     <p class="text-sm text-slate-600 mb-4">
-                        Lists (<code class="bg-slate-100 px-1 rounded text-slate-800">[ ]</code>) are mutable sequences; Tuples (<code class="bg-slate-100 px-1 rounded text-slate-800">( )</code>) are immutable. List methods modify in-place and return <code class="bg-slate-100 px-1 rounded text-slate-800">None</code>.
+                        Lists (<code class="bg-slate-100 px-1 rounded text-slate-800">[ ]</code>) are mutable sequences; Tuples (<code class="bg-slate-100 px-1 rounded text-slate-800">( )</code>) are immutable. In-place mutator methods modify objects and return <code class="bg-slate-100 px-1 rounded text-slate-800">None</code>.
                     </p>
                     <div class="bg-slate-900 rounded-lg p-3 text-xs text-slate-200 font-mono mb-4 overflow-x-auto">
                         <p>my_list = [<span class="text-cyan-400">1</span>, <span class="text-cyan-400">2</span>]</p>
@@ -283,7 +283,7 @@
                         <p><span class="text-purple-400">print</span>(<span class="text-purple-400">len</span>(my_list))   <span class="text-emerald-400"># 5 elements total!</span></p>
                     </div>
                     <div class="border-t border-slate-100 pt-3 flex items-center justify-between text-xs text-slate-500">
-                        <span><i class="fa-solid fa-triangle-exclamation text-amber-500 mr-1"></i> <code class="bg-slate-100 px-1 rounded text-slate-800">extend</code> unpacks elements, whereas <code class="bg-slate-100 px-1 rounded text-slate-800">append</code> adds nested item</span>
+                        <span><i class="fa-solid fa-triangle-exclamation text-amber-500 mr-1"></i> <code class="bg-slate-100 px-1 rounded text-slate-800">extend</code> unpacks elements; <code class="bg-slate-100 px-1 rounded text-slate-800">append</code> inserts the collection intact</span>
                     </div>
                 </div>
 
@@ -295,13 +295,13 @@
                     </div>
                     <h3 class="text-lg font-bold text-slate-800 mb-2">Memory Allocation: Aliasing vs. Shallow Copying</h3>
                     <p class="text-sm text-slate-600 mb-4">
-                        Assignment creates an <em>alias</em> (same memory location). <code class="bg-slate-100 px-1 rounded text-slate-800">.copy()</code> creates a <em>shallow copy</em> where outer lists are duplicated, but nested objects still share memory references!
+                        Direct variable assignment creates an <em>alias</em> (shared memory pointer). Calling <code class="bg-slate-100 px-1 rounded text-slate-800">.copy()</code> creates a <em>shallow copy</em>—outer list containers are duplicated, but inner nested elements retain original memory pointers!
                     </p>
                     <div class="bg-slate-900 rounded-lg p-3 text-xs text-slate-200 font-mono mb-4 overflow-x-auto">
                         <p>original = [[<span class="text-cyan-400">1</span>, <span class="text-cyan-400">2</span>], [<span class="text-cyan-400">3</span>, <span class="text-cyan-400">4</span>]]</p>
                         <p>shallow = original.copy()</p>
                         <p>shallow[<span class="text-cyan-400">0</span>][<span class="text-cyan-400">0</span>] = <span class="text-cyan-400">99</span></p>
-                        <p><span class="text-purple-400">print</span>(original[<span class="text-cyan-400">0</span>][<span class="text-cyan-400">0</span>]) <span class="text-amber-400"># Prints 99! Shared inner list</span></p>
+                        <p><span class="text-purple-400">print</span>(original[<span class="text-cyan-400">0</span>][<span class="text-cyan-400">0</span>]) <span class="text-amber-400"># Output: 99 (Shared inner sublist!)</span></p>
                     </div>
                     <div class="border-t border-slate-100 pt-3 flex items-center justify-between text-xs text-slate-500">
                         <span><i class="fa-solid fa-lightbulb text-indigo-500 mr-1"></i> Solution: Use <code class="bg-slate-100 px-1 rounded text-slate-800">copy.deepcopy()</code> for full nested independence</span>
@@ -318,10 +318,10 @@
             <!-- Introductory Context Banner -->
             <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
                 <h2 class="text-xl font-bold text-slate-800 mb-2 flex items-center gap-2">
-                    <i class="fa-solid fa-flask text-indigo-600"></i> Python Edge-Case Interactive Laboratory
+                    <i class="fa-solid fa-flask text-indigo-600"></i> Interactive Execution Laboratory
                 </h2>
                 <p class="text-slate-600 text-sm leading-relaxed">
-                    Test tricky Python behaviors directly inside these 4 custom simulations. Adjust parameters, run memory operations, and watch Python's internal logic execute step-by-step.
+                    Welcome to the Interactive Execution Laboratory. This section provides live, reactive simulators for Python's trickiest runtime edge cases. Test string slicing, inspect RAM address sharing across shallow vs. deep copies, evaluate floor division and modulo behavior with negative dividends, and step through structural pattern matching.
                 </p>
             </div>
 
@@ -331,11 +331,11 @@
                 <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
                     <div>
                         <div class="flex items-center justify-between mb-3">
-                            <h3 class="font-bold text-slate-800 text-base"><i class="fa-solid fa-scissors text-indigo-500 mr-2"></i>String Slicing Explorer</h3>
+                            <h3 class="font-bold text-slate-800 text-base"><i class="fa-solid fa-scissors text-indigo-500 mr-2"></i>String Slicing Visualizer</h3>
                             <span class="text-xs bg-indigo-50 text-indigo-700 font-mono px-2 py-0.5 rounded">s[start:stop:step]</span>
                         </div>
                         <p class="text-xs text-slate-500 mb-4">
-                            Visualize positive (0..N) and negative (-1..-N) indices, and watch how step size controls character selection.
+                            Visualize positive (0..N) and negative (-1..-N) indices in real time. Adjust step sizes to trace character evaluation.
                         </p>
 
                         <!-- Controls -->
@@ -362,7 +362,7 @@
 
                         <!-- Character Grid -->
                         <div class="bg-slate-900 rounded-lg p-3 overflow-x-auto mb-3">
-                            <div class="text-slate-400 text-xs mb-1">Positive Index & Characters:</div>
+                            <div class="text-slate-400 text-xs mb-1">Index Map (Positive / Char / Negative):</div>
                             <div id="slice-char-grid" class="flex gap-1 py-1 font-mono text-center min-w-max">
                                 <!-- Populated dynamically -->
                             </div>
@@ -371,7 +371,7 @@
 
                     <!-- Output box -->
                     <div class="bg-indigo-50 border border-indigo-100 rounded-lg p-3 text-xs">
-                        <span class="text-slate-500 block mb-1">Evaluation Output:</span>
+                        <span class="text-slate-500 block mb-1">Evaluation Result:</span>
                         <div class="font-mono text-sm font-semibold text-indigo-900">
                             s[<span id="out-slice-code">1:8:2</span>] = <span id="out-slice-val" class="text-emerald-600 bg-white px-2 py-0.5 rounded border border-indigo-200">"riii"</span>
                         </div>
@@ -382,11 +382,11 @@
                 <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
                     <div>
                         <div class="flex items-center justify-between mb-3">
-                            <h3 class="font-bold text-slate-800 text-base"><i class="fa-solid fa-memory text-indigo-500 mr-2"></i>RAM & Shallow Copy Simulator</h3>
-                            <span class="text-xs bg-amber-50 text-amber-700 font-mono px-2 py-0.5 rounded">aliasing vs copy</span>
+                            <h3 class="font-bold text-slate-800 text-base"><i class="fa-solid fa-memory text-indigo-500 mr-2"></i>RAM & Memory Copy Simulator</h3>
+                            <span class="text-xs bg-amber-50 text-amber-700 font-mono px-2 py-0.5 rounded">alias vs copy vs deepcopy</span>
                         </div>
                         <p class="text-xs text-slate-500 mb-4">
-                            Simulate how Python handles nested references in memory. Toggle copy strategies to see if modifying <code class="text-slate-800">b</code> alters <code class="text-slate-800">a</code>.
+                            Simulate how Python allocates nested lists in RAM. Select a strategy and trigger mutation on <code class="text-slate-800">b</code> to see if <code class="text-slate-800">a</code> changes.
                         </p>
 
                         <!-- Strategy Selector -->
@@ -401,7 +401,7 @@
 
                         <!-- Action Button -->
                         <button onclick="mutateCopySim()" class="w-full mb-4 bg-slate-800 hover:bg-slate-900 text-white py-1.5 px-3 rounded text-xs font-medium transition flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-bolt text-amber-400"></i> Mutate Inner Element: <code class="font-mono text-amber-300">b[0][0] = 99</code>
+                            <i class="fa-solid fa-bolt text-amber-400"></i> Mutate Sublist Element: <code class="font-mono text-amber-300">b[0][0] = 99</code>
                         </button>
 
                         <!-- Memory visual layout -->
@@ -413,7 +413,7 @@
                                 </div>
                             </div>
                             <div class="border border-slate-200 rounded-lg p-2.5 bg-slate-50">
-                                <div class="text-slate-500 text-[10px] uppercase font-bold mb-1">Variable 'b' (Copy)</div>
+                                <div class="text-slate-500 text-[10px] uppercase font-bold mb-1">Variable 'b' (Copied)</div>
                                 <div id="mem-b-state" class="bg-white p-2 rounded border border-slate-200 text-slate-800 font-semibold">
                                     [[1, 2], [3, 4]]
                                 </div>
@@ -423,7 +423,7 @@
 
                     <!-- Explanation -->
                     <div id="copy-explanation-box" class="bg-amber-50 border border-amber-200 rounded-lg p-3 text-xs text-amber-900">
-                        Select a mode and click mutate to test memory behavior!
+                        Select an assignment mode and click mutate to test memory pointers!
                     </div>
                 </div>
 
@@ -435,7 +435,7 @@
                             <span class="text-xs bg-emerald-50 text-emerald-700 font-mono px-2 py-0.5 rounded">// vs / vs %</span>
                         </div>
                         <p class="text-xs text-slate-500 mb-4">
-                            Python floor division (<code class="bg-slate-100 px-1 rounded text-slate-800">//</code>) always rounds down toward negative infinity. Test negative numbers to avoid exam mistakes.
+                            Python floor division (<code class="bg-slate-100 px-1 rounded text-slate-800">//</code>) always rounds down toward negative infinity. Input negative operands to observe the output.
                         </p>
 
                         <div class="grid grid-cols-2 gap-3 mb-4">
@@ -452,7 +452,7 @@
                         <!-- Division Breakdown Grid -->
                         <div class="grid grid-cols-3 gap-2 font-mono text-center text-xs mb-3">
                             <div class="bg-slate-50 p-2 border border-slate-200 rounded">
-                                <span class="text-[10px] text-slate-400 block">True Division (/)</span>
+                                <span class="text-[10px] text-slate-400 block">True Div (/)</span>
                                 <span id="out-div-true" class="text-sm font-bold text-slate-700">-3.33</span>
                             </div>
                             <div class="bg-indigo-50 p-2 border border-indigo-200 rounded">
@@ -467,7 +467,7 @@
                     </div>
 
                     <div id="div-explanation-box" class="bg-slate-100 border border-slate-200 rounded-lg p-3 text-xs text-slate-700">
-                        Explanation updates live with parameters.
+                        Explanation updates dynamically with parameters.
                     </div>
                 </div>
 
@@ -475,20 +475,20 @@
                 <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
                     <div>
                         <div class="flex items-center justify-between mb-3">
-                            <h3 class="font-bold text-slate-800 text-base"><i class="fa-solid fa-code-branch text-indigo-500 mr-2"></i>Match/Case Flow Evaluator</h3>
+                            <h3 class="font-bold text-slate-800 text-base"><i class="fa-solid fa-code-branch text-indigo-500 mr-2"></i>Match/Case Structural Evaluator</h3>
                             <span class="text-xs bg-purple-50 text-purple-700 font-mono px-2 py-0.5 rounded">Python 3.10+</span>
                         </div>
                         <p class="text-xs text-slate-500 mb-4">
-                            Test structural coordinate tuple matching with guards and wildcard patterns.
+                            Step through structural coordinate tuple matching using condition guards and wildcard patterns.
                         </p>
 
                         <div class="grid grid-cols-2 gap-3 mb-4">
                             <div>
-                                <label class="block text-xs font-medium text-slate-700 mb-1">Point X</label>
+                                <label class="block text-xs font-medium text-slate-700 mb-1">Coordinate X</label>
                                 <input type="number" id="match-x" value="0" oninput="updateMatchLab()" class="w-full px-3 py-1.5 border border-slate-300 rounded text-xs font-mono">
                             </div>
                             <div>
-                                <label class="block text-xs font-medium text-slate-700 mb-1">Point Y</label>
+                                <label class="block text-xs font-medium text-slate-700 mb-1">Coordinate Y</label>
                                 <input type="number" id="match-y" value="5" oninput="updateMatchLab()" class="w-full px-3 py-1.5 border border-slate-300 rounded text-xs font-mono">
                             </div>
                         </div>
@@ -496,7 +496,7 @@
                         <!-- Match Cases Step Flow -->
                         <div class="space-y-1.5 font-mono text-xs mb-3">
                             <div id="case-branch-1" class="p-2 rounded border border-slate-200 bg-slate-50 text-slate-500">
-                                <span>case (x, y) if x == y:</span> <span class="text-[10px] text-slate-400 float-right">Guard Check</span>
+                                <span>case (x, y) if x == y:</span> <span class="text-[10px] text-slate-400 float-right">Guard Evaluation</span>
                             </div>
                             <div id="case-branch-2" class="p-2 rounded border border-emerald-300 bg-emerald-50 text-emerald-800 font-bold">
                                 <span>case (0, y):</span> <span class="text-[10px] text-emerald-600 float-right">Y-Axis Match</span>
@@ -511,7 +511,7 @@
                     </div>
 
                     <div class="bg-indigo-50 border border-indigo-100 rounded-lg p-3 text-xs text-indigo-900">
-                        <span class="text-slate-500 block mb-0.5">Printed Result:</span>
+                        <span class="text-slate-500 block mb-0.5">Execution Output:</span>
                         <span id="out-match-result" class="font-mono text-sm font-bold text-indigo-950">"Y-axis: 5"</span>
                     </div>
                 </div>
@@ -527,19 +527,19 @@
             <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
                     <h2 class="text-xl font-bold text-slate-800 mb-1 flex items-center gap-2">
-                        <i class="fa-solid fa-graduation-cap text-indigo-600"></i> Python Mastery Examination
+                        <i class="fa-solid fa-graduation-cap text-indigo-600"></i> Practice Examination Suite
                     </h2>
                     <p class="text-slate-600 text-sm">
-                        Test your conceptual understanding and code output accuracy across all 10 exam questions derived from your course syllabus.
+                        Welcome to the Practice Examination Suite. Test your knowledge across all 10 core exam questions derived from the course syllabus. Select an answer for instant feedback and detailed explanations.
                     </p>
                 </div>
                 <div class="flex items-center gap-3">
                     <div class="text-right">
-                        <div class="text-xs text-slate-400 uppercase font-semibold">Current Score</div>
+                        <div class="text-xs text-slate-400 uppercase font-semibold">Current Mark</div>
                         <div id="quiz-score-display" class="text-xl font-bold text-indigo-600 font-mono">0 / 10</div>
                     </div>
                     <button onclick="restartQuiz()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-2 rounded-lg text-xs font-semibold transition flex items-center gap-1.5">
-                        <i class="fa-solid fa-rotate-right"></i> Reset Exam
+                        <i class="fa-solid fa-rotate-right"></i> Reset Quiz
                     </button>
                 </div>
             </div>
@@ -609,10 +609,10 @@
                     <i class="fa-solid fa-trophy"></i>
                 </div>
                 <h3 class="text-2xl font-bold text-slate-800 mb-2">Examination Completed!</h3>
-                <p class="text-slate-600 text-sm mb-6">Here is your detailed overall score and performance summary.</p>
+                <p class="text-slate-600 text-sm mb-6">Here is your score and overall topic breakdown.</p>
 
                 <div class="bg-slate-50 border border-slate-200 rounded-xl p-6 mb-6 inline-block w-full max-w-sm">
-                    <div class="text-xs text-slate-400 uppercase font-semibold mb-1">Final Mark</div>
+                    <div class="text-xs text-slate-400 uppercase font-semibold mb-1">Final Score</div>
                     <div id="summary-score-pct" class="text-4xl font-extrabold text-indigo-600 font-mono mb-2">0%</div>
                     <div id="summary-score-text" class="text-sm font-semibold text-slate-700">0 out of 10 Correct</div>
                 </div>
@@ -622,7 +622,7 @@
                         <i class="fa-solid fa-rotate-right mr-1.5"></i> Retake Examination
                     </button>
                     <button onclick="switchTab('analytics')" class="bg-slate-800 hover:bg-slate-900 text-white px-5 py-2.5 rounded-lg text-xs font-semibold transition">
-                        <i class="fa-solid fa-chart-pie mr-1.5"></i> View Topic Analytics
+                        <i class="fa-solid fa-chart-pie mr-1.5"></i> View Analytics
                     </button>
                 </div>
             </div>
@@ -635,10 +635,10 @@
             <!-- Introductory Context Banner -->
             <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
                 <h2 class="text-xl font-bold text-slate-800 mb-1 flex items-center gap-2">
-                    <i class="fa-solid fa-chart-pie text-indigo-600"></i> Course Performance & Mastery Breakdown
+                    <i class="fa-solid fa-chart-pie text-indigo-600"></i> Course Performance & Mastery Analytics
                 </h2>
                 <p class="text-slate-600 text-sm">
-                    Analyze topic weighting across the course syllabus and track your practice exam performance across core domains.
+                    Welcome to Performance Analytics. This dashboard compares syllabus topic distributions with your live practice exam performance. Complete questions in the Practice Exam tab to update your real-time accuracy rates.
                 </p>
             </div>
 
@@ -657,8 +657,8 @@
                     <span id="metric-accuracy" class="text-2xl font-extrabold text-emerald-600 font-mono">0%</span>
                 </div>
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <span class="text-[10px] text-slate-400 uppercase font-bold block mb-1">Focus Area</span>
-                    <span id="metric-focus" class="text-sm font-bold text-amber-600 truncate block mt-1">Nested Copying</span>
+                    <span class="text-[10px] text-slate-400 uppercase font-bold block mb-1">Focus Recommendation</span>
+                    <span id="metric-focus" class="text-xs font-bold text-amber-600 truncate block mt-1">Memory Allocation</span>
                 </div>
             </div>
 
@@ -671,7 +671,7 @@
                         <h3 class="font-bold text-slate-800 text-sm mb-1">
                             <i class="fa-solid fa-chart-radar text-indigo-500 mr-1.5"></i> Syllabus Topic Weight Distribution
                         </h3>
-                        <p class="text-xs text-slate-500 mb-4">Relative weight of lecture topics tested on the AL2001 exam.</p>
+                        <p class="text-xs text-slate-500 mb-4">Relative weight of lecture topics tested on the AL2001 examination.</p>
                     </div>
                     <div class="chart-container">
                         <canvas id="topicRadarChart"></canvas>
@@ -682,9 +682,9 @@
                 <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
                     <div>
                         <h3 class="font-bold text-slate-800 text-sm mb-1">
-                            <i class="fa-solid fa-chart-column text-indigo-500 mr-1.5"></i> Category Accuracy Breakdown
+                            <i class="fa-solid fa-chart-column text-indigo-500 mr-1.5"></i> Live Category Accuracy Breakdown
                         </h3>
-                        <p class="text-xs text-slate-500 mb-4">Live percentage accuracy based on your practice exam responses.</p>
+                        <p class="text-xs text-slate-500 mb-4">Percentage accuracy calculated from your practice exam responses.</p>
                     </div>
                     <div class="chart-container">
                         <canvas id="accuracyBarChart"></canvas>
@@ -699,7 +699,7 @@
     <!-- FOOTER -->
     <footer class="bg-white border-t border-slate-200 py-4 mt-auto">
         <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500">
-            AL2001 Programming for AI Study Tool &bull; Single-Page Interactive Learning Suite
+            AL2001 Programming for AI &bull; Interactive Mastery & Exam Suite
         </div>
     </footer>
 
@@ -725,7 +725,7 @@
                 code: "original = [[1, 2], [3, 4]]\nshallow = original.copy()\nshallow[0][0] = 99\nprint(original[0][0])",
                 options: ["1", "99", "[[99, 2]]", "Error"],
                 correctIndex: 1,
-                explanation: "The `.copy()` method creates a shallow copy. While the outer list is a new object, the nested sublists are shared references in memory. Mutating `shallow[0][0]` mutates `original[0][0]` as well."
+                explanation: "The `.copy()` method creates a shallow copy. While the outer list is a new object, the nested sublists share memory references. Mutating `shallow[0][0]` mutates `original[0][0]` as well."
             },
             {
                 id: 3,
@@ -810,7 +810,7 @@
         let currentTab = 'explorer';
         let userAnswers = new Array(quizData.length).fill(null);
         let currentQuizIndex = 0;
-        let copySimMutated = false;
+        let selectedOptTemp = null;
 
         // Chart instances
         let radarChartInstance = null;
@@ -868,12 +868,14 @@
             });
         }
 
-        function filterCategory(cat) {
+        function filterCategory(cat, evt) {
             const buttons = document.querySelectorAll('.cat-filter-btn');
             buttons.forEach(btn => {
                 btn.className = "cat-filter-btn bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap";
             });
-            event.target.className = "cat-filter-btn active bg-indigo-50 text-indigo-700 border border-indigo-200 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap";
+            if (evt && evt.target) {
+                evt.target.className = "cat-filter-btn active bg-indigo-50 text-indigo-700 border border-indigo-200 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap";
+            }
 
             const cards = document.querySelectorAll('.study-card');
             cards.forEach(card => {
@@ -891,26 +893,30 @@
         // 1. String Slicing Lab
         function updateSliceLab() {
             const str = document.getElementById('slice-str-input').value || "Artificial";
-            const start = parseInt(document.getElementById('slice-start').value) || 0;
-            const stop = parseInt(document.getElementById('slice-stop').value) || str.length;
-            const step = parseInt(document.getElementById('slice-step').value) || 1;
+            const start = parseInt(document.getElementById('slice-start').value);
+            const stop = parseInt(document.getElementById('slice-stop').value);
+            const step = parseInt(document.getElementById('slice-step').value);
 
             const gridContainer = document.getElementById('slice-char-grid');
             gridContainer.innerHTML = '';
 
+            const validStart = isNaN(start) ? 0 : start;
+            const validStop = isNaN(stop) ? str.length : stop;
+            const validStep = isNaN(step) || step === 0 ? 1 : step;
+
             // Compute indices selected by Python slice
             const selectedIndices = [];
-            if (step > 0) {
-                for (let i = start; i < stop && i < str.length; i += step) {
+            if (validStep > 0) {
+                for (let i = validStart; i < validStop && i < str.length; i += validStep) {
                     if (i >= 0) selectedIndices.push(i);
                 }
-            } else if (step < 0) {
-                for (let i = start; i > stop && i >= 0; i += step) {
+            } else {
+                for (let i = validStart; i > validStop && i >= 0; i += validStep) {
                     if (i < str.length) selectedIndices.push(i);
                 }
             }
 
-            // Render characters with index badges
+            // Render characters with positive and negative index badges
             for (let i = 0; i < str.length; i++) {
                 const isSelected = selectedIndices.includes(i);
                 const charBox = document.createElement('div');
@@ -929,36 +935,24 @@
                 gridContainer.appendChild(charBox);
             }
 
-            // Slice output calculation
-            let result = "";
-            try {
-                // Approximate JS slice for standard dynamic display
-                if (step === 1) {
-                    result = str.slice(start, stop);
-                } else {
-                    let chars = [];
-                    if (step > 0) {
-                        for (let i = start; i < stop && i < str.length; i += step) {
-                            if (i >= 0) chars.push(str[i]);
-                        }
-                    } else {
-                        for (let i = start; i > stop && i >= 0; i += step) {
-                            if (i < str.length) chars.push(str[i]);
-                        }
-                    }
-                    result = chars.join('');
+            // Calculate output string
+            let chars = [];
+            if (validStep > 0) {
+                for (let i = validStart; i < validStop && i < str.length; i += validStep) {
+                    if (i >= 0) chars.push(str[i]);
                 }
-            } catch (e) {
-                result = "Error";
+            } else {
+                for (let i = validStart; i > validStop && i >= 0; i += validStep) {
+                    if (i < str.length) chars.push(str[i]);
+                }
             }
 
-            document.getElementById('out-slice-code').innerText = `${start}:${stop}:${step}`;
-            document.getElementById('out-slice-val').innerText = `"${result}"`;
+            document.getElementById('out-slice-code').innerText = `${validStart}:${validStop}:${validStep}`;
+            document.getElementById('out-slice-val').innerText = `"${chars.join('')}"`;
         }
 
-        // 2. RAM & Copy Simulator
+        // 2. Memory Copy Simulator
         function runCopySimulation() {
-            copySimMutated = false;
             const strat = document.getElementById('copy-strategy').value;
             const expBox = document.getElementById('copy-explanation-box');
 
@@ -966,31 +960,30 @@
             document.getElementById('mem-b-state').innerText = "[[1, 2], [3, 4]]";
 
             if (strat === 'alias') {
-                expBox.innerText = "Alias created (b = a). Variables 'a' and 'b' point to the exact same outer object address in RAM.";
+                expBox.innerText = "Alias created (b = a). Variables 'a' and 'b' reference the exact same memory address in RAM.";
             } else if (strat === 'shallow') {
-                expBox.innerText = "Shallow copy created (b = a.copy()). Variable 'b' gets a new outer list container, but inner nested sublists still share memory references!";
+                expBox.innerText = "Shallow copy created (b = a.copy()). Variable 'b' receives a new outer list container, but inner nested sublists still share memory references!";
             } else {
-                expBox.innerText = "Deep copy created (copy.deepcopy(a)). Full recursive duplication. Variables 'a' and 'b' are completely independent.";
+                expBox.innerText = "Deep copy created (copy.deepcopy(a)). Full recursive duplication. Variables 'a' and 'b' are completely memory-independent.";
             }
         }
 
         function mutateCopySim() {
-            copySimMutated = true;
             const strat = document.getElementById('copy-strategy').value;
             const expBox = document.getElementById('copy-explanation-box');
 
             if (strat === 'alias') {
                 document.getElementById('mem-a-state').innerText = "[[99, 2], [3, 4]]";
                 document.getElementById('mem-b-state').innerText = "[[99, 2], [3, 4]]";
-                expBox.innerHTML = "<strong class='text-rose-700'>Mutated!</strong> Since 'b' is an alias of 'a', modifying `b[0][0]` modified `a[0][0]` as well!";
+                expBox.innerHTML = "<strong class='text-rose-700'>Mutated!</strong> 'b' is an alias of 'a'. Modifying `b[0][0]` altered `a[0][0]` as well.";
             } else if (strat === 'shallow') {
                 document.getElementById('mem-a-state').innerText = "[[99, 2], [3, 4]]";
                 document.getElementById('mem-b-state').innerText = "[[99, 2], [3, 4]]";
-                expBox.innerHTML = "<strong class='text-amber-800'>Shallow Mutation!</strong> Even though `b` is a copied outer list, the inner list `[1, 2]` is shared! Modifying `b[0][0]` altered `a[0][0]`!";
+                expBox.innerHTML = "<strong class='text-amber-800'>Shallow Mutation!</strong> Although 'b' is a new outer list, inner list `[1, 2]` is shared! Modifying `b[0][0]` altered `a[0][0]`!";
             } else {
                 document.getElementById('mem-a-state').innerText = "[[1, 2], [3, 4]]";
                 document.getElementById('mem-b-state').innerText = "[[99, 2], [3, 4]]";
-                expBox.innerHTML = "<strong class='text-emerald-800'>Independent!</strong> Deep copy duplicated inner memory. Modifying `b[0][0]` left `a[0][0]` completely untouched!";
+                expBox.innerHTML = "<strong class='text-emerald-800'>Independent!</strong> Deep copy duplicated nested inner memory. Modifying `b[0][0]` left `a[0][0]` completely intact!";
             }
         }
 
@@ -1001,7 +994,7 @@
 
             const trueDiv = a / b;
             const floorDiv = Math.floor(a / b);
-            const mod = ((a % b) + b) % b; // Python modulo math for negative dividends
+            const mod = ((a % b) + Math.abs(b)) % Math.abs(b); // Python modulo arithmetic
 
             document.getElementById('out-div-true').innerText = trueDiv.toFixed(2);
             document.getElementById('out-div-floor').innerText = floorDiv;
@@ -1009,9 +1002,9 @@
 
             const exp = document.getElementById('div-explanation-box');
             if (a < 0) {
-                exp.innerHTML = `<i class="fa-solid fa-circle-info text-indigo-500 mr-1"></i> <strong>Negative Floor Rule:</strong> True quotient is ${trueDiv.toFixed(2)}. Floor division rounds DOWN towards negative infinity to standard integer <strong>${floorDiv}</strong>.`;
+                exp.innerHTML = `<i class="fa-solid fa-circle-info text-indigo-500 mr-1"></i> <strong>Negative Floor Rule:</strong> True quotient is ${trueDiv.toFixed(2)}. Floor division rounds DOWN towards negative infinity to integer <strong>${floorDiv}</strong>.`;
             } else {
-                exp.innerHTML = `<i class="fa-solid fa-circle-info text-indigo-500 mr-1"></i> Standard Division: True quotient is ${trueDiv.toFixed(2)}. Floor division truncates/rounds down to integer <strong>${floorDiv}</strong>.`;
+                exp.innerHTML = `<i class="fa-solid fa-circle-info text-indigo-500 mr-1"></i> Standard Division: True quotient is ${trueDiv.toFixed(2)}. Floor division rounds down to integer <strong>${floorDiv}</strong>.`;
             }
         }
 
@@ -1050,6 +1043,7 @@
         // ==========================================
         function loadQuestion(index) {
             currentQuizIndex = index;
+            selectedOptTemp = null;
             const q = quizData[index];
 
             document.getElementById('quiz-q-num').innerText = `Question ${index + 1} of ${quizData.length}`;
@@ -1059,7 +1053,7 @@
             // Progress bar update
             document.getElementById('quiz-progress').style.width = `${((index + 1) / quizData.length) * 100}%`;
 
-            // Code snippet container
+            // Code snippet block
             const codeContainer = document.getElementById('quiz-q-code-container');
             if (q.code) {
                 codeContainer.classList.remove('hidden');
@@ -1086,8 +1080,6 @@
                     } else if (optIndex === currentAnswer && currentAnswer !== q.correctIndex) {
                         btnStyle = "w-full text-left p-3.5 rounded-xl border border-rose-300 bg-rose-50 text-rose-900 font-mono text-xs sm:text-sm flex items-center justify-between";
                     }
-                } else if (currentAnswer === optIndex) {
-                    btnStyle = "w-full text-left p-3.5 rounded-xl border-2 border-indigo-600 bg-indigo-50 font-mono text-xs sm:text-sm flex items-center justify-between";
                 }
 
                 optBtn.className = btnStyle;
@@ -1099,7 +1091,7 @@
                 optionsContainer.appendChild(optBtn);
             });
 
-            // Feedback / Rationale box
+            // Feedback & Controls
             const feedbackBox = document.getElementById('quiz-feedback-box');
             const submitBtn = document.getElementById('quiz-submit-btn');
             const nextBtn = document.getElementById('quiz-next-btn');
@@ -1125,13 +1117,11 @@
                 nextBtn.classList.add('hidden');
             }
 
-            // Previous Button state
             document.getElementById('quiz-prev-btn').disabled = (index === 0);
         }
 
-        let selectedOptTemp = null;
         function selectOption(optIndex) {
-            if (userAnswers[currentQuizIndex] !== null) return; // Answer locked
+            if (userAnswers[currentQuizIndex] !== null) return; // Locked answer
             selectedOptTemp = optIndex;
 
             const optionsContainer = document.getElementById('quiz-options-container');
@@ -1203,7 +1193,7 @@
         // TAB 4: CHART.JS ANALYTICS
         // ==========================================
         function renderCharts() {
-            // Metrics computation
+            // Calculate exam metrics
             const attempted = userAnswers.filter(a => a !== null).length;
             let correct = 0;
             userAnswers.forEach((ans, idx) => {
@@ -1215,7 +1205,7 @@
             document.getElementById('metric-attempted').innerText = `${attempted} / ${quizData.length}`;
             document.getElementById('metric-accuracy').innerText = `${accuracyPct}%`;
 
-            // Chart 1: Topic Weighting Radar
+            // Radar Chart: Course Weight Distribution
             const ctxRadar = document.getElementById('topicRadarChart').getContext('2d');
             if (radarChartInstance) radarChartInstance.destroy();
 
@@ -1224,7 +1214,7 @@
                 data: {
                     labels: ['Variables & Ops', 'I/O Formatting', 'Strings & Slicing', 'Control Flow', 'Data Structures', 'Memory & Copying'],
                     datasets: [{
-                        label: 'Lecture Focus Weight',
+                        label: 'Syllabus Focus Weight',
                         data: [85, 75, 90, 85, 95, 90],
                         backgroundColor: 'rgba(79, 70, 229, 0.2)',
                         borderColor: '#4f46e5',
@@ -1248,15 +1238,17 @@
                 }
             });
 
-            // Chart 2: Category Accuracy Bar Chart
+            // Bar Chart: Live Category Accuracy Breakdown
             const categories = ['Strings & Slicing', 'Data Structures', 'Control Flow', 'Basics & Ops'];
             const catTotals = { 'Strings & Slicing': 0, 'Data Structures': 0, 'Control Flow': 0, 'Basics & Ops': 0 };
             const catCorrect = { 'Strings & Slicing': 0, 'Data Structures': 0, 'Control Flow': 0, 'Basics & Ops': 0 };
 
             quizData.forEach((q, idx) => {
-                catTotals[q.category]++;
-                if (userAnswers[idx] === q.correctIndex) {
-                    catCorrect[q.category]++;
+                if (catTotals[q.category] !== undefined) {
+                    catTotals[q.category]++;
+                    if (userAnswers[idx] === q.correctIndex) {
+                        catCorrect[q.category]++;
+                    }
                 }
             });
 
@@ -1295,7 +1287,7 @@
             });
         }
 
-        // Initialize on Load
+        // Initialize on DOM ready
         window.addEventListener('DOMContentLoaded', () => {
             updateSliceLab();
             runCopySimulation();
